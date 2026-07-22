@@ -555,31 +555,42 @@
   @keyframes marquee{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
 
   /* Clients */
-  .clients-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:64px;}
-  .client-col .eyebrow{margin-bottom:28px;}
-  .client-col ul{display:flex;flex-direction:column;gap:0;border-top:1px solid var(--line);}
-  .client-col li{
-    padding:16px 0;
-    border-bottom:1px solid var(--line);
-    font-family:'Space Grotesk',sans-serif;
-    font-size:1rem;font-weight:500;color:var(--paper);
-    display:flex;justify-content:space-between;align-items:center;
-    transition:all .3s var(--ease);
-    cursor:default;
+  .clients-marquee{
+    margin-top:56px;
+    overflow:hidden;
+    -webkit-mask-image:linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+    mask-image:linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
   }
-  .client-col li:hover{
-    padding-left:12px;
-    background:rgba(243,239,230,0.03);
-    color:var(--signal-bright);
+  .clients-track{
+    display:flex;
+    align-items:center;
+    gap:56px;
+    width:max-content;
+    animation:clientsMarquee 75s linear infinite;
+    will-change:transform;
   }
-  .client-col li span.tag{
-    font-family:'IBM Plex Mono',monospace;
-    font-size:0.6rem;color:var(--steel);
-    letter-spacing:0.08em;
+  .clients-marquee:hover .clients-track{animation-play-state:paused;}
+  .client-logo-card{
+    flex-shrink:0;
+    width:190px;
+    height:112px;
+    background:var(--paper);
     border:1px solid var(--line);
-    padding:3px 7px;
-    font-weight:500;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:22px;
   }
+  .client-logo-card img{
+    max-width:100%;
+    max-height:100%;
+    object-fit:contain;
+    filter:grayscale(1);
+    opacity:0.82;
+    transition:filter .35s var(--ease), opacity .35s var(--ease);
+  }
+  .client-logo-card:hover img{filter:grayscale(0);opacity:1;}
+  @keyframes clientsMarquee{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
 
   /* Contact */
   .contact{background:var(--panel);border-top:1px solid var(--line);}
@@ -704,6 +715,8 @@
     .hero-stats .wrap{grid-template-columns:1fr 1fr;}
     .hero h1{font-size:clamp(2.6rem, 11vw, 3.6rem);}
     .about-lede{font-size:1.25rem;}
+    .client-logo-card{width:130px;height:84px;padding:14px;}
+    .clients-track{gap:32px;}
   }
   @media (max-width:480px){
     .hero-stats .wrap{grid-template-columns:1fr;}
@@ -916,33 +929,29 @@
       <h2>Trusted across government, mining and private sectors.</h2>
       <p>A growing portfolio built on long-term partnerships, professional standards and reliable delivery.</p>
     </div>
-    <div class="clients-grid">
-      <div class="client-col reveal">
-        <div class="eyebrow">Government &amp; Public</div>
-        <ul>
-          <li>Limpopo Office of the Premier <span class="tag">GOV</span></li>
-          <li>Limpopo Dept. of Transport &amp; Community Safety <span class="tag">GOV</span></li>
-          <li>Limpopo Legislature <span class="tag">GOV</span></li>
-          <li>Mogalakwena Local Municipality <span class="tag">GOV</span></li>
-        </ul>
-      </div>
-      <div class="client-col reveal">
-        <div class="eyebrow">Mining &amp; Industrial</div>
-        <ul>
-          <li>Ivanplats <span class="tag">MINE</span></li>
-          <li>Valterra <span class="tag">MINE</span></li>
-        </ul>
-      </div>
-      <div class="client-col reveal">
-        <div class="eyebrow">Private Sector</div>
-        <ul>
-          <li>SPAR Mokopane <span class="tag">RETAIL</span></li>
-          <li>EH Hassim <span class="tag">PRIVATE</span></li>
-          <li>U City <span class="tag">PRIVATE</span></li>
-          <li>Painters Paradise <span class="tag">PRIVATE</span></li>
-          <li>KS Solutions <span class="tag">PRIVATE</span></li>
-        </ul>
-      </div>
+  </div>
+  <div class="clients-marquee reveal">
+    <div class="clients-track">
+      <div class="client-logo-card"><img src="https://i.postimg.cc/s2kS1K4k/Limpopo-Office-of-the-Premier.png" alt="Limpopo Office of the Premier" loading="lazy"></div>
+      <div class="client-logo-card"><img src="https://i.postimg.cc/zfbKJ4KT/transport-and-community-safety.png" alt="Limpopo Department of Transport and Community Safety" loading="lazy"></div>
+      <div class="client-logo-card"><img src="https://i.postimg.cc/rwY52qdn/Limpopo-Legislature.png" alt="Limpopo Legislature" loading="lazy"></div>
+      <div class="client-logo-card"><img src="https://i.postimg.cc/c4hQTRdx/Mogalakwena-Local-Municipality.png" alt="Mogalakwena Local Municipality" loading="lazy"></div>
+      <div class="client-logo-card"><img src="https://i.postimg.cc/qRKsGW7R/Valterra.png" alt="Valterra" loading="lazy"></div>
+      <div class="client-logo-card"><img src="https://i.postimg.cc/gjq3CRRg/Ivanplats.png" alt="Ivanplats" loading="lazy"></div>
+      <div class="client-logo-card"><img src="https://i.postimg.cc/4x8Q4z0M/SPAR-Mokopane.png" alt="SPAR Mokopane" loading="lazy"></div>
+      <div class="client-logo-card"><img src="https://i.postimg.cc/yYyTtqy7/EH-Hassim.png" alt="EH Hassim" loading="lazy"></div>
+      <div class="client-logo-card"><img src="https://i.postimg.cc/yYyTtqy7/EH-Hassim.png" alt="EH Hassim" loading="lazy"></div>
+      <div class="client-logo-card"><img src="https://i.postimg.cc/bJ0GrPJr/UCITY.png" alt="U City" loading="lazy"></div>
+      <div class="client-logo-card" aria-hidden="true"><img src="https://i.postimg.cc/s2kS1K4k/Limpopo-Office-of-the-Premier.png" alt="" loading="lazy"></div>
+      <div class="client-logo-card" aria-hidden="true"><img src="https://i.postimg.cc/zfbKJ4KT/transport-and-community-safety.png" alt="" loading="lazy"></div>
+      <div class="client-logo-card" aria-hidden="true"><img src="https://i.postimg.cc/rwY52qdn/Limpopo-Legislature.png" alt="" loading="lazy"></div>
+      <div class="client-logo-card" aria-hidden="true"><img src="https://i.postimg.cc/c4hQTRdx/Mogalakwena-Local-Municipality.png" alt="" loading="lazy"></div>
+      <div class="client-logo-card" aria-hidden="true"><img src="https://i.postimg.cc/qRKsGW7R/Valterra.png" alt="" loading="lazy"></div>
+      <div class="client-logo-card" aria-hidden="true"><img src="https://i.postimg.cc/gjq3CRRg/Ivanplats.png" alt="" loading="lazy"></div>
+      <div class="client-logo-card" aria-hidden="true"><img src="https://i.postimg.cc/4x8Q4z0M/SPAR-Mokopane.png" alt="" loading="lazy"></div>
+      <div class="client-logo-card" aria-hidden="true"><img src="https://i.postimg.cc/yYyTtqy7/EH-Hassim.png" alt="" loading="lazy"></div>
+      <div class="client-logo-card" aria-hidden="true"><img src="https://i.postimg.cc/yYyTtqy7/EH-Hassim.png" alt="" loading="lazy"></div>
+      <div class="client-logo-card" aria-hidden="true"><img src="https://i.postimg.cc/bJ0GrPJr/UCITY.png" alt="" loading="lazy"></div>
     </div>
   </div>
 </section>
