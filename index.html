@@ -211,18 +211,14 @@
     background:var(--ink-deep);
   }
   .hero-media{position:absolute;inset:0;z-index:0;background:var(--ink);}
-  .hero-video{
+  .hero-bg{
     position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
-    opacity:0;transition:opacity 1.6s var(--ease);
   }
-  .hero-video.ready{opacity:0.45;}
-  #heroCanvas{position:absolute;inset:0;width:100%;height:100%;}
   .hero-overlay{
     position:absolute;inset:0;
     background:
-      radial-gradient(80% 120% at 15% 20%, rgba(232,163,61,0.12) 0%, transparent 60%),
-      linear-gradient(180deg, rgba(15,18,22,0.4) 0%, rgba(15,18,22,0.2) 35%, rgba(15,18,22,0.96) 92%),
-      linear-gradient(90deg, rgba(15,18,22,0.85) 0%, rgba(15,18,22,0.25) 60%, rgba(15,18,22,0.6) 100%);
+      radial-gradient(60% 90% at 15% 15%, rgba(232,163,61,0.10) 0%, transparent 60%),
+      linear-gradient(180deg, rgba(10,13,16,0.32) 0%, rgba(10,13,16,0.05) 32%, rgba(10,13,16,0.6) 100%);
     z-index:1;
   }
   .hero-grid-overlay{
@@ -233,7 +229,7 @@
     background-size:72px 72px;
     mask-image:radial-gradient(70% 70% at 30% 30%, black 20%, transparent 75%);
     -webkit-mask-image:radial-gradient(70% 70% at 30% 30%, black 20%, transparent 75%);
-    opacity:0.8;
+    opacity:0.5;
   }
   .hero-main{
     flex:1;
@@ -310,50 +306,9 @@
   @keyframes fadeIn{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
   
   .hero-actions{
-    display:flex;gap:14px;margin-top:44px;flex-wrap:wrap;
+    display:flex;gap:14px;flex-wrap:wrap;
     opacity:0;
     animation:fadeIn 0.9s var(--ease-out) 0.8s forwards;
-  }
-
-  .hero-stats{
-    position:relative;z-index:3;
-    border-top:1px solid var(--line);
-    background:rgba(15,18,22,0.85);
-    backdrop-filter:blur(12px);
-  }
-  .hero-stats .wrap{
-    display:grid;grid-template-columns:repeat(4,1fr);
-  }
-  .stat{
-    padding:26px 32px;
-    border-right:1px solid var(--line);
-    position:relative;
-    overflow:hidden;
-    transition:background .4s var(--ease);
-  }
-  .stat::before{
-    content:'';position:absolute;top:0;left:0;width:0;height:2px;background:var(--signal);
-    transition:width .6s var(--ease);
-  }
-  .stat:hover{ background:rgba(243,239,230,0.03); }
-  .stat:hover::before{width:100%;}
-  .stat:last-child{border-right:none;}
-  .stat .num{
-    font-family:'Space Grotesk',sans-serif;
-    font-size:1.55rem;
-    font-weight:800;
-    color:var(--paper);
-    letter-spacing:-0.02em;
-    line-height:1;
-  }
-  .stat .lbl{
-    font-family:'IBM Plex Mono',monospace;
-    font-size:0.66rem;
-    letter-spacing:0.1em;
-    text-transform:uppercase;
-    color:var(--steel);
-    margin-top:8px;
-    font-weight:500;
   }
 
   /* Section shared */
@@ -408,49 +363,53 @@
   .pillar .v{color:var(--paper-dim);font-size:0.95rem;line-height:1.7;}
   .pillar .v strong{color:var(--paper);font-weight:700;}
 
-  /* Services */
-  .services{background:var(--ink-soft);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+  /* Services - light/paper theme (alternates with dark sections) */
+  .services{background:var(--paper);color:var(--ink);border-top:1px solid var(--line-strong);border-bottom:1px solid var(--line-strong);}
+  .services .eyebrow{color:var(--earth);}
+  .services .eyebrow::before{background:var(--earth);}
+  .services .section-head h2{color:var(--ink);}
+  .services .section-head p{color:#5d5a4f;}
   .network-wrap{position:relative;margin:0 0 80px 0;display:flex;justify-content:center;}
   .network-wrap svg{width:100%;max-width:920px;height:auto;}
   .net-line{
-    stroke:var(--line-strong);stroke-width:1;fill:none;
+    stroke:#d8d2bf;stroke-width:1;fill:none;
     stroke-dasharray:8 600;
     transition:stroke-dashoffset 1.8s var(--ease), stroke-dasharray 1.8s var(--ease), stroke .4s;
   }
-  .network-wrap.in .net-line{stroke-dasharray:600 0;stroke:var(--signal-dim);}
+  .network-wrap.in .net-line{stroke-dasharray:600 0;stroke:var(--earth);}
   .net-node-hub{fill:var(--signal);filter:drop-shadow(0 0 12px rgba(232,163,61,0.4));}
-  .net-node{fill:var(--panel-light);stroke:var(--steel-dim);stroke-width:1.5;transition:fill .4s, stroke .4s;}
-  .network-wrap:hover .net-node{fill:var(--panel-hover);stroke:var(--steel);}
-  .net-label{font-family:'IBM Plex Mono',monospace;font-size:11px;fill:var(--steel);letter-spacing:0.05em;text-transform:uppercase;font-weight:500;}
+  .net-node{fill:var(--paper);stroke:#b8b3a5;stroke-width:1.5;transition:fill .4s, stroke .4s;}
+  .network-wrap:hover .net-node{fill:#ece7da;stroke:#9a9588;}
+  .net-label{font-family:'IBM Plex Mono',monospace;font-size:11px;fill:#7a766a;letter-spacing:0.05em;text-transform:uppercase;font-weight:500;}
   .net-label-hub{font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:800;fill:var(--ink);}
 
   .services-grid{
     display:grid;
     grid-template-columns:repeat(4,1fr);
     gap:1px;
-    background:var(--line);
-    border:1px solid var(--line);
+    background:#d8d2bf;
+    border:1px solid #d8d2bf;
   }
   .service-card{
-    background:var(--ink-soft);
+    background:var(--paper);
     padding:42px 32px 36px;
     transition:all .5s var(--ease);
     position:relative;
     overflow:hidden;
   }
   .service-card::before{
-    content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--signal);
+    content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--earth);
     transform:scaleX(0);transform-origin:left;
     transition:transform .5s var(--ease);
   }
   .service-card::after{
     content:'';position:absolute;inset:0;
-    background:radial-gradient(400px 200px at 0% 0%, rgba(232,163,61,0.06), transparent 60%);
+    background:radial-gradient(400px 200px at 0% 0%, rgba(168,69,43,0.06), transparent 60%);
     opacity:0;transition:opacity .5s;
     pointer-events:none;
   }
   .service-card:hover{
-    background:var(--panel-hover);
+    background:#ece7da;
     transform:translateY(-4px);
     box-shadow:var(--shadow-card);
     z-index:2;
@@ -459,69 +418,70 @@
   .service-card:hover::after{opacity:1;}
   .service-card .idx{
     font-family:'IBM Plex Mono',monospace;
-    font-size:0.7rem;color:var(--signal);letter-spacing:0.14em;
+    font-size:0.7rem;color:var(--earth);letter-spacing:0.14em;
     font-weight:600;
     display:flex;align-items:center;gap:8px;
   }
   .service-card .idx::after{
-    content:'';width:24px;height:1px;background:var(--line-strong);display:inline-block;
+    content:'';width:24px;height:1px;background:#c9c3b3;display:inline-block;
   }
   .service-card h3{
     font-size:1.22rem;
     font-weight:700;
     margin-top:20px;
-    color:var(--paper);
+    color:var(--ink);
     line-height:1.25;
     min-height:2.5em;
   }
   .service-card ul{margin-top:22px;display:flex;flex-direction:column;gap:10px;}
   .service-card li{
-    font-size:0.87rem;color:var(--paper-dim);
+    font-size:0.87rem;color:#5d5a4f;
     padding-left:18px;position:relative;line-height:1.5;
     transition:color .3s, transform .3s;
   }
   .service-card li::before{
-    content:'';position:absolute;left:0;top:9px;width:7px;height:1px;background:var(--steel-dim);
+    content:'';position:absolute;left:0;top:9px;width:7px;height:1px;background:#9a9588;
     transition:width .3s, background .3s;
   }
-  .service-card:hover li{color:var(--steel-bright);}
-  .service-card:hover li::before{background:var(--signal);width:10px;}
+  .service-card:hover li{color:#3a382f;}
+  .service-card:hover li::before{background:var(--earth);width:10px;}
 
-  /* Why us */
+  /* Why us - dark theme (alternates with the now-light services section) */
+  .why{background:var(--ink-soft);}
   .why-grid{
     display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
-    background:#d8d2bf;
-    border:1px solid #d8d2bf;
+    background:var(--line);
+    border:1px solid var(--line);
   }
   .why-card{
-    background:var(--paper);
+    background:var(--ink-soft);
     padding:38px 32px;
     position:relative;
     transition:all .45s var(--ease);
     overflow:hidden;
   }
   .why-card::before{
-    content:'';position:absolute;top:0;left:0;width:100%;height:0;background:var(--ink);
+    content:'';position:absolute;top:0;left:0;width:100%;height:0;background:var(--signal);
     transition:height .45s var(--ease);
     z-index:0;
   }
-  .why-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-card);z-index:2;}
+  .why-card:hover{background:var(--panel-hover);transform:translateY(-3px);box-shadow:var(--shadow-card);z-index:2;}
   .why-card:hover::before{height:3px;}
   .why-card .num{
     font-family:'Space Grotesk',sans-serif;
     font-size:1.75rem;font-weight:800;
-    color:var(--earth);
+    color:var(--signal);
     line-height:1;
     position:relative;z-index:1;
   }
   .why-card h4{
-    margin-top:18px;font-size:1.08rem;color:var(--ink);
+    margin-top:18px;font-size:1.08rem;color:var(--paper);
     font-weight:700;
     letter-spacing:-0.01em;
     position:relative;z-index:1;
   }
   .why-card p{
-    margin-top:10px;font-size:0.9rem;color:#615e52;line-height:1.65;
+    margin-top:10px;font-size:0.9rem;color:var(--paper-dim);line-height:1.65;
     position:relative;z-index:1;
   }
 
@@ -748,24 +708,14 @@
 
 <section class="hero" id="top">
   <div class="hero-media">
-    <video class="hero-video" id="heroVideo" autoplay muted loop playsinline preload="none">
-      <source src="assets/hero-video.mp4" type="video/mp4">
-    </video>
-    <canvas id="heroCanvas"></canvas>
+    <img class="hero-bg" src="https://i.postimg.cc/65TnzhNR/herog.png" alt="">
   </div>
   <div class="hero-grid-overlay"></div>
   <div class="hero-overlay"></div>
-  
+
   <div class="hero-main">
     <div class="wrap">
       <div class="hero-content">
-        <div class="hero-tag"><span class="dot"></span> Level 1 B-BBEE &middot; South African Owned &middot; Est. 2016</div>
-        <h1>
-          <span class="line"><i>Building</i></span>
-          <span class="line"><i>Connections.</i></span>
-          <span class="line"><i><em>Powering Industries.</em></i></span>
-        </h1>
-        <p class="hero-sub">Afribaraka delivers integrated communications, mining support, construction and supply solutions to government, mining houses and private businesses across Limpopo and beyond — one accountable partner, four specialised divisions.</p>
         <div class="hero-actions">
           <a href="#services" class="btn btn-primary">Explore Our Services
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
@@ -773,15 +723,6 @@
           <a href="#contact" class="btn btn-ghost">Talk To Us</a>
         </div>
       </div>
-    </div>
-  </div>
-
-  <div class="hero-stats">
-    <div class="wrap">
-      <div class="stat"><div class="num">2016</div><div class="lbl">Established</div></div>
-      <div class="stat"><div class="num">Level 1</div><div class="lbl">B-BBEE Contributor</div></div>
-      <div class="stat"><div class="num">04</div><div class="lbl">Integrated Divisions</div></div>
-      <div class="stat"><div class="num">Gov &middot; Mining &middot; Private</div><div class="lbl">Sectors Served</div></div>
     </div>
   </div>
 </section>
@@ -1086,78 +1027,16 @@
     window.location.href = `mailto:admin@afribaraka.com?subject=${subject}&body=${body}`;
   });
 
-  /* Hero canvas - fixed DPI and overlap bugs */
-  const video = document.getElementById('heroVideo');
-  const canvas = document.getElementById('heroCanvas');
-  const ctx = canvas.getContext('2d', {alpha:false});
-  let particles = [], W, H, raf, dpr = Math.min(window.devicePixelRatio || 1, 2);
-
-  function sizeCanvas(){
-    const rect = canvas.getBoundingClientRect();
-    dpr = Math.min(window.devicePixelRatio || 1, 2);
-    W = canvas.width = Math.floor(rect.width * dpr);
-    H = canvas.height = Math.floor(rect.height * dpr);
-    ctx.setTransform(dpr,0,0,dpr,0,0);
-  }
-  function initParticles(){
-    const count = window.innerWidth < 720 ? 32 : 58;
-    const w = W / dpr, h = H / dpr;
-    particles = Array.from({length:count}, () => ({
-      x: Math.random()*w, y: Math.random()*h,
-      vx: (Math.random()-0.5)*0.22, vy: (Math.random()-0.5)*0.22,
-      r: Math.random()*1.4+0.8
-    }));
-  }
-  function drawFrame(){
-    const w = W / dpr, h = H / dpr;
-    ctx.fillStyle = '#0a0d10';
-    ctx.fillRect(0,0,w,h);
-    const linkDist = 148;
-    for(let i=0;i<particles.length;i++){
-      const p = particles[i];
-      p.x += p.vx; p.y += p.vy;
-      if(p.x<0||p.x>w) p.vx*=-1;
-      if(p.y<0||p.y>h) p.vy*=-1;
-      for(let j=i+1;j<particles.length;j++){
-        const q = particles[j];
-        const dx=p.x-q.x, dy=p.y-q.y, dist=Math.hypot(dx,dy);
-        if(dist<linkDist){
-          ctx.strokeStyle = `rgba(232,163,61,${(1-dist/linkDist)*0.18})`;
-          ctx.lineWidth = 0.8;
-          ctx.beginPath(); ctx.moveTo(p.x,p.y); ctx.lineTo(q.x,q.y); ctx.stroke();
-        }
-      }
-    }
-    for(const p of particles){
-      ctx.fillStyle = p.x < w*0.4 ? 'rgba(243,239,230,0.65)' : 'rgba(243,239,230,0.38)';
-      ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fill();
-    }
-    raf = requestAnimationFrame(drawFrame);
-  }
-  function startCanvas(){
-    sizeCanvas(); initParticles();
-    cancelAnimationFrame(raf);
-    drawFrame();
-  }
-  startCanvas();
-  let resizeT;
-  window.addEventListener('resize', () => {
-    clearTimeout(resizeT);
-    resizeT = setTimeout(startCanvas, 120);
-  });
-
-  video.addEventListener('playing', () => video.classList.add('ready'));
-  video.addEventListener('error', () => { video.style.display = 'none'; });
-
-  // Subtle parallax for hero
+  // Subtle parallax for the hero image
+  const heroBg = document.querySelector('.hero-bg');
   let ticking = false;
   window.addEventListener('scroll', () => {
     if(ticking) return;
     ticking = true;
     requestAnimationFrame(() => {
       const y = window.scrollY;
-      if(y < window.innerHeight){
-        canvas.style.transform = `translateY(${y*0.18}px)`;
+      if(heroBg && y < window.innerHeight){
+        heroBg.style.transform = `translateY(${y*0.12}px) scale(1.05)`;
       }
       ticking = false;
     });
