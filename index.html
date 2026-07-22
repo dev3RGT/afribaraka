@@ -311,6 +311,53 @@
     animation:fadeIn 0.9s var(--ease-out) 0.8s forwards;
   }
 
+  /* Hero category strip - fixed to bottom of hero, slides up on load, slides down on scroll */
+  .hero-strip{
+    position:fixed;
+    left:0;right:0;bottom:0;
+    z-index:40;
+    background:linear-gradient(180deg, rgba(10,13,16,0.35) 0%, rgba(10,13,16,0.86) 100%);
+    backdrop-filter:blur(16px) saturate(1.15);
+    -webkit-backdrop-filter:blur(16px) saturate(1.15);
+    border-top:1px solid var(--line-strong);
+    transform:translateY(100%);
+    opacity:0;
+    pointer-events:none;
+    transition:transform .7s var(--ease-out), opacity .5s var(--ease-out);
+    will-change:transform,opacity;
+  }
+  .hero-strip.in{transform:translateY(0);opacity:1;pointer-events:auto;}
+  body.menu-open .hero-strip{opacity:0;transform:translateY(100%);pointer-events:none;}
+  .hero-strip-inner{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+  }
+  .hero-strip-item{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    padding:24px 28px;
+    transition:background .35s var(--ease);
+  }
+  .hero-strip-item:not(:first-child){border-left:1px solid var(--line-strong);}
+  .hero-strip-item:hover{background:rgba(232,163,61,0.06);}
+  .hero-strip-icon{
+    width:30px;height:30px;
+    flex-shrink:0;
+    color:var(--signal);
+    transition:transform .35s var(--ease), color .35s;
+  }
+  .hero-strip-item:hover .hero-strip-icon{color:var(--signal-bright);transform:scale(1.08);}
+  .hero-strip-item span{
+    font-family:'Inter',sans-serif;
+    font-weight:700;
+    font-size:0.78rem;
+    letter-spacing:0.03em;
+    text-transform:uppercase;
+    color:var(--steel-bright);
+    line-height:1.4;
+  }
+
   /* Section shared */
   .section{padding:140px 0;}
   .section-head{max-width:680px;margin-bottom:72px;}
@@ -643,6 +690,8 @@
     .hero-stats .wrap{grid-template-columns:repeat(2,1fr);}
     .stat:nth-child(2){border-right:none;}
     .stat:nth-child(1), .stat:nth-child(2){border-bottom:1px solid var(--line);}
+    .hero-strip-item{padding:20px;}
+    .hero-strip-item span{font-size:0.72rem;}
   }
   @media (max-width:720px){
     .wrap{padding:0 22px;}
@@ -668,6 +717,12 @@
     .hero-actions{flex-direction:column;align-items:stretch;}
     .hero-stats .wrap{grid-template-columns:1fr 1fr;}
     .hero h1{font-size:clamp(2.6rem, 11vw, 3.6rem);}
+    .hero-strip-inner{grid-template-columns:repeat(2,1fr);}
+    .hero-strip-item{border-left:none !important;padding:16px 14px;gap:12px;}
+    .hero-strip-item:nth-child(2n){border-left:1px solid var(--line-strong) !important;}
+    .hero-strip-item:nth-child(3),.hero-strip-item:nth-child(4){border-top:1px solid var(--line-strong);}
+    .hero-strip-icon{width:24px;height:24px;}
+    .hero-strip-item span{font-size:0.66rem;letter-spacing:0.02em;}
     .about-lede{font-size:1.25rem;}
     .client-logo-card{width:195px;height:126px;padding:8px;}
     .clients-track{gap:32px;}
@@ -708,7 +763,7 @@
 
 <section class="hero" id="top">
   <div class="hero-media">
-    <img class="hero-bg" src="https://i.postimg.cc/gjn60Yz3/herogs.png" alt="">
+    <img class="hero-bg" src="https://i.postimg.cc/65TnzhNR/herog.png" alt="">
   </div>
   <div class="hero-grid-overlay"></div>
   <div class="hero-overlay"></div>
@@ -722,6 +777,51 @@
           </a>
           <a href="#contact" class="btn btn-ghost">Talk To Us</a>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-strip" id="heroStrip">
+    <div class="wrap hero-strip-inner">
+      <div class="hero-strip-item">
+        <svg class="hero-strip-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9.5 18h5L13 9h-2z"/>
+          <path d="M12 9V4"/>
+          <circle cx="12" cy="3" r="1.1" fill="currentColor" stroke="none"/>
+          <path d="M8.5 13.5 4 21M15.5 13.5 20 21"/>
+          <path d="M6.5 8a8 8 0 0 1 11 0" stroke-width="1.4"/>
+          <path d="M4.5 5.5a11.5 11.5 0 0 1 15 0" stroke-width="1.4"/>
+        </svg>
+        <span>Communications<br>&amp; Media</span>
+      </div>
+      <div class="hero-strip-item">
+        <svg class="hero-strip-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 8h15l-2 8H6z"/>
+          <path d="M4 8 3 5M19 8l1-3"/>
+          <path d="M8 16h8"/>
+          <circle cx="8" cy="19" r="1.6"/>
+          <circle cx="16" cy="19" r="1.6"/>
+        </svg>
+        <span>Mining Support<br>Services</span>
+      </div>
+      <div class="hero-strip-item">
+        <svg class="hero-strip-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 21V4"/>
+          <path d="M4 4h13"/>
+          <path d="M17 4v4"/>
+          <path d="M4 10h9"/>
+          <path d="M9 10v11"/>
+          <path d="M4 21h14"/>
+        </svg>
+        <span>Construction</span>
+      </div>
+      <div class="hero-strip-item">
+        <svg class="hero-strip-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 8l9-5 9 5-9 5-9-5z"/>
+          <path d="M3 8v9l9 5 9-5V8"/>
+          <path d="M12 13v9"/>
+        </svg>
+        <span>General Supplies</span>
       </div>
     </div>
   </div>
@@ -1014,6 +1114,20 @@
 
   // Footer year
   document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Hero strip - slides up into view on load, slides down out of view once you scroll
+  const heroStrip = document.getElementById('heroStrip');
+  const STRIP_THRESHOLD = 60;
+  let stripIn = false;
+  function updateHeroStrip(){
+    const shouldShow = window.scrollY < STRIP_THRESHOLD;
+    if(shouldShow !== stripIn){
+      heroStrip.classList.toggle('in', shouldShow);
+      stripIn = shouldShow;
+    }
+  }
+  window.addEventListener('scroll', updateHeroStrip, {passive:true});
+  setTimeout(() => { if(window.scrollY < STRIP_THRESHOLD){ heroStrip.classList.add('in'); stripIn = true; } }, 1000);
 
   // Contact form -> mailto with validation
   document.getElementById('contactForm').addEventListener('submit', function(e){
