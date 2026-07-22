@@ -572,24 +572,18 @@
   .clients-marquee:hover .clients-track{animation-play-state:paused;}
   .client-logo-card{
     flex-shrink:0;
-    width:190px;
-    height:112px;
-    background:var(--paper);
-    border:1px solid var(--line);
+    width:285px;
+    height:168px;
     display:flex;
     align-items:center;
     justify-content:center;
-    padding:22px;
+    padding:10px;
   }
   .client-logo-card img{
     max-width:100%;
     max-height:100%;
     object-fit:contain;
-    filter:grayscale(1);
-    opacity:0.82;
-    transition:filter .35s var(--ease), opacity .35s var(--ease);
   }
-  .client-logo-card:hover img{filter:grayscale(0);opacity:1;}
   @keyframes clientsMarquee{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
 
   /* Contact */
@@ -715,7 +709,7 @@
     .hero-stats .wrap{grid-template-columns:1fr 1fr;}
     .hero h1{font-size:clamp(2.6rem, 11vw, 3.6rem);}
     .about-lede{font-size:1.25rem;}
-    .client-logo-card{width:130px;height:84px;padding:14px;}
+    .client-logo-card{width:195px;height:126px;padding:8px;}
     .clients-track{gap:32px;}
   }
   @media (max-width:480px){
