@@ -790,8 +790,7 @@
       border-radius:8px;
     }
   }
-  @media (max-width:720px){
-    .wrap{padding:0 22px;}
+  @media (max-width:900px){
     nav.primary{
       position:fixed;top:0;right:0;height:100vh;width:82%;max-width:340px;
       background:var(--panel);
@@ -804,6 +803,15 @@
     nav.primary.open{transform:translateX(0);}
     nav.primary a{font-size:1.1rem;font-weight:600;}
     .burger{display:flex;}
+    .hero-strip-inner{grid-template-columns:repeat(2,1fr);}
+    .hero-strip-item{border-left:none !important;padding:16px 14px;gap:12px;}
+    .hero-strip-item:nth-child(2n){border-left:1px solid var(--line-strong) !important;}
+    .hero-strip-item:nth-child(3),.hero-strip-item:nth-child(4){border-top:1px solid var(--line-strong);}
+    .hero-strip-icon{width:24px;height:24px;}
+    .hero-strip-item span{font-size:0.66rem;letter-spacing:0.02em;}
+  }
+  @media (max-width:720px){
+    .wrap{padding:0 22px;}
     .section{padding:92px 0;}
     .services-grid{grid-template-columns:1fr;}
     .why-flow-row{flex-direction:column;align-items:center;gap:38px;}
@@ -821,22 +829,16 @@
     .form-card{padding:28px;}
     .hero-main{padding-top:100px;padding-bottom:32px;}
     .hero-actions{flex-direction:column;align-items:stretch;}
-    .hero-stats .wrap{grid-template-columns:1fr 1fr;}
     .hero h1{font-size:clamp(2.6rem, 11vw, 3.6rem);}
-    .hero-strip-inner{grid-template-columns:repeat(2,1fr);}
-    .hero-strip-item{border-left:none !important;padding:16px 14px;gap:12px;}
-    .hero-strip-item:nth-child(2n){border-left:1px solid var(--line-strong) !important;}
-    .hero-strip-item:nth-child(3),.hero-strip-item:nth-child(4){border-top:1px solid var(--line-strong);}
-    .hero-strip-icon{width:24px;height:24px;}
-    .hero-strip-item span{font-size:0.66rem;letter-spacing:0.02em;}
     .about-lede{font-size:1.25rem;}
     .client-logo-card{width:195px;height:126px;padding:8px;}
     .clients-track{gap:32px;}
+    .field input,.field select,.field textarea{font-size:16px;}
   }
   @media (max-width:480px){
-    .hero-stats .wrap{grid-template-columns:1fr;}
-    .stat{border-right:none !important;border-bottom:1px solid var(--line);}
-    .stat:last-child{border-bottom:none;}
+    .hero h1{font-size:clamp(2.2rem, 10.5vw, 3rem);}
+    .hero-tag{font-size:0.64rem;padding:7px 12px;}
+    .hero-sub{font-size:0.96rem;padding-left:16px;}
   }
 
   /* Reduced motion */
@@ -876,6 +878,11 @@
   <div class="hero-main">
     <div class="wrap">
       <div class="hero-content">
+        <h1>
+          <span class="line"><i></i></span>
+          <span class="line"><i> <em></em>.</i></span>
+        </h1>
+        <p class="hero-sub"></p>
         <div class="hero-actions">
           <a href="#services" class="btn btn-primary">Explore Our Services
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
@@ -1149,7 +1156,6 @@
   <div class="values-track">
     <span>Integrity</span><span>Professionalism</span><span>Excellence</span><span>Innovation</span><span>Accountability</span><span>Customer Satisfaction</span><span>Safety</span><span>Sustainability</span>
     <span>Integrity</span><span>Professionalism</span><span>Excellence</span><span>Innovation</span><span>Accountability</span><span>Customer Satisfaction</span><span>Safety</span><span>Sustainability</span>
-    <span>Integrity</span><span>Professionalism</span><span>Excellence</span><span>Innovation</span><span>Accountability</span><span>Customer Satisfaction</span><span>Safety</span><span>Sustainability</span>
   </div>
 </div>
 
@@ -1171,7 +1177,7 @@
       <div class="client-logo-card"><img src="https://i.postimg.cc/gjq3CRRg/Ivanplats.png" alt="Ivanplats" loading="lazy"></div>
       <div class="client-logo-card"><img src="https://i.postimg.cc/4x8Q4z0M/SPAR-Mokopane.png" alt="SPAR Mokopane" loading="lazy"></div>
       <div class="client-logo-card"><img src="https://i.postimg.cc/yYyTtqy7/EH-Hassim.png" alt="EH Hassim" loading="lazy"></div>
-      <div class="client-logo-card"><img src="https://i.postimg.cc/yYyTtqy7/EH-Hassim.png" alt="EH Hassim" loading="lazy"></div>
+      <div class="client-logo-card"><img src="https://i.postimg.cc/Njbp9hKm/ks.png" alt="KS" loading="lazy"></div>
       <div class="client-logo-card"><img src="https://i.postimg.cc/bJ0GrPJr/UCITY.png" alt="U City" loading="lazy"></div>
       <div class="client-logo-card" aria-hidden="true"><img src="https://i.postimg.cc/s2kS1K4k/Limpopo-Office-of-the-Premier.png" alt="" loading="lazy"></div>
       <div class="client-logo-card" aria-hidden="true"><img src="https://i.postimg.cc/zfbKJ4KT/transport-and-community-safety.png" alt="" loading="lazy"></div>
