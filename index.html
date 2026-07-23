@@ -409,19 +409,74 @@
   .services .eyebrow::before{background:var(--earth);}
   .services .section-head h2{color:var(--ink);}
   .services .section-head p{color:#5d5a4f;}
-  .network-wrap{position:relative;margin:0 0 80px 0;display:flex;justify-content:center;}
-  .network-wrap svg{width:100%;max-width:920px;height:auto;}
-  .net-line{
-    stroke:#d8d2bf;stroke-width:1;fill:none;
-    stroke-dasharray:8 600;
-    transition:stroke-dashoffset 1.8s var(--ease), stroke-dasharray 1.8s var(--ease), stroke .4s;
+  /* Hub diagram — AB core with sliding division satellites */
+  .hub-diagram{
+    position:relative;
+    width:100%;max-width:760px;
+    height:460px;
+    margin:0 auto 80px;
+    perspective:1800px;
+    --ox:250px;--oy:138px;
   }
-  .network-wrap.in .net-line{stroke-dasharray:600 0;stroke:var(--earth);}
-  .net-node-hub{fill:var(--signal);filter:drop-shadow(0 0 12px rgba(232,163,61,0.4));}
-  .net-node{fill:var(--paper);stroke:#b8b3a5;stroke-width:1.5;transition:fill .4s, stroke .4s;}
-  .network-wrap:hover .net-node{fill:#ece7da;stroke:#9a9588;}
-  .net-label{font-family:'IBM Plex Mono',monospace;font-size:11px;fill:#7a766a;letter-spacing:0.05em;text-transform:uppercase;font-weight:500;}
-  .net-label-hub{font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:800;fill:var(--ink);}
+  .hub-lines{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none;}
+  .hub-lines line{
+    stroke:#d8d2bf;stroke-width:1.5;fill:none;
+    stroke-dasharray:8 900;
+    transition:stroke-dasharray 1.4s var(--ease) .2s, stroke .4s;
+  }
+  .hub-diagram.in .hub-lines line{stroke-dasharray:900 0;stroke:var(--earth);}
+  .hub-circle{
+    position:absolute;top:50%;left:50%;
+    width:132px;height:132px;
+    border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(150deg,#2a323a,#12161a);
+    border:1px solid rgba(232,163,61,0.4);
+    box-shadow:0 30px 60px rgba(0,0,0,0.4), 0 10px 24px rgba(0,0,0,0.28), inset 0 1px 1px rgba(255,255,255,0.1), inset 0 -8px 16px rgba(0,0,0,0.4);
+    z-index:5;
+    animation:hubFloat 5s ease-in-out infinite;
+  }
+  .hub-circle::before{
+    content:'';position:absolute;inset:-28px;border-radius:50%;
+    background:radial-gradient(circle, rgba(232,163,61,0.4), transparent 70%);
+    filter:blur(20px);z-index:-1;
+  }
+  .hub-circle span{
+    font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:1.6rem;
+    color:var(--signal-bright);letter-spacing:0.02em;
+  }
+  @keyframes hubFloat{0%,100%{transform:translate(-50%,-50%) translateY(0);}50%{transform:translate(-50%,-50%) translateY(-10px);}}
+  .orbit-circle{
+    position:absolute;top:50%;left:50%;
+    width:112px;height:112px;
+    border-radius:50%;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;
+    background:linear-gradient(150deg,#232a31,#0d1013);
+    border:1px solid var(--line-strong);
+    box-shadow:0 20px 40px rgba(0,0,0,0.4), inset 0 1px 1px rgba(255,255,255,0.08), inset 0 -6px 12px rgba(0,0,0,0.35);
+    opacity:0;
+    transform:translate(-50%,-50%) rotate(-32deg) scale(0.25);
+    transition:transform 1s var(--ease-out), opacity .7s var(--ease-out);
+    z-index:4;
+    will-change:transform,opacity;
+  }
+  .orbit-circle::before{
+    content:'';position:absolute;inset:-18px;border-radius:50%;
+    background:radial-gradient(circle, rgba(232,163,61,0.25), transparent 70%);
+    filter:blur(16px);z-index:-1;opacity:0;
+    transition:opacity .8s var(--ease-out) .3s;
+  }
+  .hub-diagram.in .orbit-circle::before{opacity:1;}
+  .orbit-circle svg{width:26px;height:26px;stroke:var(--signal);flex-shrink:0;}
+  .orbit-circle .lbl{
+    font-family:'IBM Plex Mono',monospace;font-size:0.6rem;letter-spacing:0.07em;text-transform:uppercase;
+    color:var(--paper-dim);font-weight:600;text-align:center;padding:0 10px;
+  }
+  .hub-diagram.in .orbit-circle{opacity:1;}
+  .hub-diagram.in .orbit-comms{transform:translate(calc(-50% - var(--ox)), calc(-50% - var(--oy))) rotate(0deg) scale(1);}
+  .hub-diagram.in .orbit-construction{transform:translate(calc(-50% + var(--ox)), calc(-50% - var(--oy))) rotate(0deg) scale(1);}
+  .hub-diagram.in .orbit-mining{transform:translate(calc(-50% - var(--ox)), calc(-50% + var(--oy))) rotate(0deg) scale(1);}
+  .hub-diagram.in .orbit-supplies{transform:translate(calc(-50% + var(--ox)), calc(-50% + var(--oy))) rotate(0deg) scale(1);}
 
   .services-grid{
     display:grid;
@@ -499,44 +554,52 @@
   .service-card.in:hover li{color:#3a382f;}
   .service-card.in:hover li::before{background:var(--earth);width:10px;}
 
-  /* Why us - dark theme (alternates with the now-light services section) */
+  /* Why us - dark theme, logic-flow of floating circular icons */
   .why{background:var(--ink-soft);}
-  .why-grid{
-    display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
-    background:var(--line);
-    border:1px solid var(--line);
+  .why-flow{display:flex;flex-direction:column;gap:54px;padding:24px 0 8px;}
+  .why-flow-row{display:flex;align-items:flex-start;justify-content:center;gap:0;}
+  .why-node{
+    flex:1 1 0;max-width:230px;
+    display:flex;flex-direction:column;align-items:center;text-align:center;
+    opacity:0;transform:translateY(26px) scale(0.97);
+    transition:opacity .75s var(--ease-out), transform .75s var(--ease-out);
   }
-  .why-card{
-    background:var(--ink-soft);
-    padding:38px 32px;
-    position:relative;
-    transition:all .45s var(--ease);
-    overflow:hidden;
+  .why-flow.in .why-node{opacity:1;transform:translateY(0) scale(1);}
+  .why-connector{
+    flex:0 0 56px;height:2px;margin-top:52px;position:relative;
+    background:repeating-linear-gradient(90deg, var(--steel-dim) 0 6px, transparent 6px 13px);
+    opacity:0;
+    transition:opacity .6s var(--ease-out) .35s;
   }
-  .why-card::before{
-    content:'';position:absolute;top:0;left:0;width:100%;height:0;background:var(--signal);
-    transition:height .45s var(--ease);
-    z-index:0;
+  .why-connector::after{
+    content:'';position:absolute;right:-1px;top:-4px;
+    border-top:5px solid transparent;border-bottom:5px solid transparent;border-left:8px solid var(--steel-dim);
   }
-  .why-card:hover{background:var(--panel-hover);transform:translateY(-3px);box-shadow:var(--shadow-card);z-index:2;}
-  .why-card:hover::before{height:3px;}
-  .why-card .num{
-    font-family:'Space Grotesk',sans-serif;
-    font-size:1.75rem;font-weight:800;
-    color:var(--signal);
-    line-height:1;
-    position:relative;z-index:1;
+  .why-flow.in .why-connector{opacity:1;}
+  .why-icon-wrap{position:relative;width:92px;height:92px;margin-bottom:22px;}
+  .why-icon-glow{
+    position:absolute;inset:-16px;border-radius:50%;
+    background:radial-gradient(circle, rgba(232,163,61,0.4), transparent 70%);
+    filter:blur(18px);z-index:0;
   }
-  .why-card h4{
-    margin-top:18px;font-size:1.08rem;color:var(--paper);
-    font-weight:700;
-    letter-spacing:-0.01em;
-    position:relative;z-index:1;
+  .why-icon{
+    position:relative;width:92px;height:92px;border-radius:50%;
+    background:linear-gradient(150deg,var(--panel-light),var(--panel));
+    display:flex;align-items:center;justify-content:center;
+    border:1px solid var(--line-strong);
+    box-shadow:0 22px 40px rgba(0,0,0,0.45), inset 0 1px 1px rgba(255,255,255,0.08), inset 0 -6px 12px rgba(0,0,0,0.3);
+    animation:whyFloat 4.5s ease-in-out infinite;
+    transition:transform .4s var(--ease), box-shadow .4s var(--ease);
+    z-index:1;
   }
-  .why-card p{
-    margin-top:10px;font-size:0.9rem;color:var(--paper-dim);line-height:1.65;
-    position:relative;z-index:1;
+  .why-node:hover .why-icon{
+    transform:translateY(-8px) scale(1.06);
+    box-shadow:0 30px 54px rgba(0,0,0,0.55), inset 0 1px 1px rgba(255,255,255,0.12), inset 0 -6px 12px rgba(0,0,0,0.3);
   }
+  .why-icon svg{width:34px;height:34px;stroke:var(--signal);}
+  @keyframes whyFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
+  .why-node h4{margin-top:2px;font-size:1.02rem;color:var(--paper);font-weight:700;letter-spacing:-0.01em;}
+  .why-node p{margin-top:8px;font-size:0.86rem;color:var(--paper-dim);line-height:1.6;}
 
   /* Values strip - enhanced animation */
   .values-strip{
@@ -689,7 +752,6 @@
     .wrap{padding:0 32px;}
     .about-grid{grid-template-columns:1fr;gap:48px;}
     .services-grid{grid-template-columns:repeat(2,1fr);}
-    .why-grid{grid-template-columns:repeat(2,1fr);}
     .clients-grid{grid-template-columns:1fr;gap:48px;}
     .contact-grid{grid-template-columns:1fr;gap:56px;}
     .footer-top{grid-template-columns:1fr 1fr;gap:48px;}
@@ -698,6 +760,11 @@
     .stat:nth-child(1), .stat:nth-child(2){border-bottom:1px solid var(--line);}
     .hero-strip-item{padding:20px;}
     .hero-strip-item span{font-size:0.72rem;}
+    .hub-diagram{--ox:190px;--oy:118px;height:400px;}
+    .hub-circle{width:112px;height:112px;}
+    .hub-circle span{font-size:1.35rem;}
+    .orbit-circle{width:96px;height:96px;}
+    .orbit-circle svg{width:22px;height:22px;}
   }
   @media (max-width:720px){
     .wrap{padding:0 22px;}
@@ -715,7 +782,16 @@
     .burger{display:flex;}
     .section{padding:92px 0;}
     .services-grid{grid-template-columns:1fr;}
-    .why-grid{grid-template-columns:1fr;}
+    .why-flow-row{flex-direction:column;align-items:center;gap:38px;}
+    .why-connector{display:none;}
+    .why-node{max-width:300px;}
+    .hub-diagram{--ox:100px;--oy:150px;height:440px;max-width:420px;}
+    .hub-lines{display:none;}
+    .hub-circle{width:88px;height:88px;}
+    .hub-circle span{font-size:1.15rem;}
+    .orbit-circle{width:78px;height:78px;gap:4px;}
+    .orbit-circle svg{width:18px;height:18px;}
+    .orbit-circle .lbl{font-size:0.52rem;padding:0 6px;}
     .footer-top{grid-template-columns:1fr;gap:44px;padding-bottom:56px;}
     .form-row{grid-template-columns:1fr;gap:0;}
     .form-card{padding:28px;}
@@ -869,23 +945,39 @@
       <p>Afribaraka connects distinct sectors under a single, reliable partner — so clients get integrated delivery instead of coordinating multiple suppliers.</p>
     </div>
 
-    <div class="network-wrap" id="networkWrap">
-      <svg viewBox="0 0 900 260" aria-hidden="true">
-        <line class="net-line" x1="450" y1="130" x2="150" y2="50"/>
-        <line class="net-line" x1="450" y1="130" x2="150" y2="210"/>
-        <line class="net-line" x1="450" y1="130" x2="750" y2="50"/>
-        <line class="net-line" x1="450" y1="130" x2="750" y2="210"/>
-        <circle class="net-node" cx="150" cy="50" r="7"/>
-        <circle class="net-node" cx="150" cy="210" r="7"/>
-        <circle class="net-node" cx="750" cy="50" r="7"/>
-        <circle class="net-node" cx="750" cy="210" r="7"/>
-        <circle class="net-node-hub" cx="450" cy="130" r="20"/>
-        <text class="net-label-hub" x="450" y="134" text-anchor="middle">AB</text>
-        <text class="net-label" x="150" y="30" text-anchor="middle">Communications</text>
-        <text class="net-label" x="150" y="235" text-anchor="middle">Mining</text>
-        <text class="net-label" x="750" y="30" text-anchor="middle">Construction</text>
-        <text class="net-label" x="750" y="235" text-anchor="middle">Supplies</text>
+    <div class="hub-diagram" id="hubDiagram">
+      <svg class="hub-lines" viewBox="0 0 760 460" preserveAspectRatio="none" aria-hidden="true">
+        <line x1="380" y1="230" x2="130" y2="92"/>
+        <line x1="380" y1="230" x2="630" y2="92"/>
+        <line x1="380" y1="230" x2="130" y2="368"/>
+        <line x1="380" y1="230" x2="630" y2="368"/>
       </svg>
+      <div class="hub-circle"><span>AB</span></div>
+      <div class="orbit-circle orbit-comms">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 20v-8"/><path d="M8 20h8"/><circle cx="12" cy="6" r="3"/>
+          <path d="M7.5 9.5a6 6 0 0 1 9 0"/><path d="M5 7a9 9 0 0 1 14 0"/>
+        </svg>
+        <span class="lbl">Communications</span>
+      </div>
+      <div class="orbit-circle orbit-construction">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M2 18h20"/><path d="M4 18v-2a8 8 0 0 1 16 0v2"/><path d="M12 4v4"/>
+        </svg>
+        <span class="lbl">Construction</span>
+      </div>
+      <div class="orbit-circle orbit-mining">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M6 3h12l4 6-10 12L2 9Z"/><path d="M2 9h20"/><path d="M12 3v18"/>
+        </svg>
+        <span class="lbl">Mining</span>
+      </div>
+      <div class="orbit-circle orbit-supplies">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M21 8 12 3 3 8v8l9 5 9-5Z"/><path d="M3 8l9 5 9-5"/><path d="M12 13v8"/>
+        </svg>
+        <span class="lbl">Supplies</span>
+      </div>
     </div>
 
     <div class="services-grid" id="servicesGrid">
@@ -943,13 +1035,81 @@
       <div class="eyebrow">Why Choose Afribaraka</div>
       <h2>Value-driven delivery, built on accountability.</h2>
     </div>
-    <div class="why-grid reveal-stagger">
-      <div class="why-card"><div class="num">01</div><h4>Client-Focused Delivery</h4><p>Professional leadership and service tailored to each client's real needs.</p></div>
-      <div class="why-card"><div class="num">02</div><h4>Competitive &amp; Reliable</h4><p>Competitive pricing backed by reliable procurement networks and quality workmanship.</p></div>
-      <div class="why-card"><div class="num">03</div><h4>On-Time Delivery</h4><p>Timely project delivery without compromising on standards.</p></div>
-      <div class="why-card"><div class="num">04</div><h4>Fully Compliant</h4><p>Compliance with South African legislation across every division.</p></div>
-      <div class="why-card"><div class="num">05</div><h4>Health &amp; Safety First</h4><p>Committed to health, safety and environmental standards on every site.</p></div>
-      <div class="why-card"><div class="num">06</div><h4>Ethical &amp; Transparent</h4><p>Business practices built on integrity from quote to completion.</p></div>
+    <div class="why-flow" id="whyFlow">
+      <div class="why-flow-row">
+        <div class="why-node" style="transition-delay:.05s">
+          <div class="why-icon-wrap"><div class="why-icon-glow"></div>
+            <div class="why-icon" style="animation-delay:0s">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="9" cy="8" r="4"/><path d="M2 21c0-4 3-7 7-7"/><path d="m15 15 2 2 4-4"/>
+              </svg>
+            </div>
+          </div>
+          <h4>Client-Focused Delivery</h4>
+          <p>Professional leadership and service tailored to each client's real needs.</p>
+        </div>
+        <div class="why-connector"></div>
+        <div class="why-node" style="transition-delay:.15s">
+          <div class="why-icon-wrap"><div class="why-icon-glow"></div>
+            <div class="why-icon" style="animation-delay:.3s">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2" fill="currentColor" stroke="none"/>
+              </svg>
+            </div>
+          </div>
+          <h4>Competitive &amp; Reliable</h4>
+          <p>Competitive pricing backed by reliable procurement networks and quality workmanship.</p>
+        </div>
+        <div class="why-connector"></div>
+        <div class="why-node" style="transition-delay:.25s">
+          <div class="why-icon-wrap"><div class="why-icon-glow"></div>
+            <div class="why-icon" style="animation-delay:.6s">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/>
+              </svg>
+            </div>
+          </div>
+          <h4>On-Time Delivery</h4>
+          <p>Timely project delivery without compromising on standards.</p>
+        </div>
+      </div>
+      <div class="why-flow-row">
+        <div class="why-node" style="transition-delay:.05s">
+          <div class="why-icon-wrap"><div class="why-icon-glow"></div>
+            <div class="why-icon" style="animation-delay:.9s">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 3l7 3v6c0 5-3 8-7 9-4-1-7-4-7-9V6Z"/><path d="m9 12 2 2 4-4"/>
+              </svg>
+            </div>
+          </div>
+          <h4>Fully Compliant</h4>
+          <p>Compliance with South African legislation across every division.</p>
+        </div>
+        <div class="why-connector"></div>
+        <div class="why-node" style="transition-delay:.15s">
+          <div class="why-icon-wrap"><div class="why-icon-glow"></div>
+            <div class="why-icon" style="animation-delay:1.2s">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M20 8.5c0 4-4 7-8 10-4-3-8-6-8-10a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 8.5Z"/><path d="M6 11h2l1.5-3L11 14l1.5-3H17"/>
+              </svg>
+            </div>
+          </div>
+          <h4>Health &amp; Safety First</h4>
+          <p>Committed to health, safety and environmental standards on every site.</p>
+        </div>
+        <div class="why-connector"></div>
+        <div class="why-node" style="transition-delay:.25s">
+          <div class="why-icon-wrap"><div class="why-icon-glow"></div>
+            <div class="why-icon" style="animation-delay:1.5s">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 3v18"/><path d="M5 7h14"/><path d="M5 7 2 13a3 3 0 0 0 6 0Z"/><path d="M19 7l-3 6a3 3 0 0 0 6 0Z"/>
+              </svg>
+            </div>
+          </div>
+          <h4>Ethical &amp; Transparent</h4>
+          <p>Business practices built on integrity from quote to completion.</p>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -1111,11 +1271,22 @@
   });
 
   // Scroll reveal - enhanced with better threshold
-  const revealTargets = document.querySelectorAll('.reveal, .reveal-stagger, #networkWrap');
+  const revealTargets = document.querySelectorAll('.reveal, .reveal-stagger, #whyFlow');
   const io = new IntersectionObserver((entries) => {
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
   }, {threshold:0.15, rootMargin:'0px 0px -40px 0px'});
   revealTargets.forEach(t => io.observe(t));
+
+  // Hub diagram - division circles slide out from behind the AB hub as you
+  // scroll into the section, and slide back behind it once you scroll past
+  // (or back up above it), like a rudder swinging in and out.
+  const hubDiagram = document.getElementById('hubDiagram');
+  if (hubDiagram) {
+    const hubIO = new IntersectionObserver((entries) => {
+      entries.forEach(e => { e.target.classList.toggle('in', e.isIntersecting); });
+    }, {threshold:0.3, rootMargin:'0px 0px -60px 0px'});
+    hubIO.observe(hubDiagram);
+  }
 
   // Service cards - float in one by one from the right, and fade back out
   // one by one once you scroll past them (toggles every time, never unobserved).
