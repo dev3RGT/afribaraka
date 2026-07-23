@@ -556,6 +556,16 @@
 
   /* Why us - dark theme, logic-flow of floating circular icons */
   .why{background:var(--ink-soft);}
+  .why-layout{position:relative;}
+  .why-image{
+    position:absolute;top:0;right:0;
+    width:220px;bottom:-140px;
+    border-radius:6px;
+    overflow:hidden;
+    box-shadow:0 30px 70px rgba(0,0,0,0.4), 0 8px 20px rgba(0,0,0,0.25);
+    border:1px solid var(--line-strong);
+  }
+  .why-image img{width:100%;height:100%;object-fit:cover;display:block;}
   .why-flow{display:flex;flex-direction:column;gap:54px;padding:24px 0 8px;}
   .why-flow-row{display:flex;align-items:flex-start;justify-content:center;gap:0;}
   .why-node{
@@ -765,6 +775,14 @@
     .hub-circle span{font-size:1.35rem;}
     .orbit-circle{width:96px;height:96px;}
     .orbit-circle svg{width:22px;height:22px;}
+  }
+  @media (max-width:960px){
+    .why-image{
+      position:static;
+      width:100%;height:320px;
+      margin-top:48px;
+      border-radius:8px;
+    }
   }
   @media (max-width:720px){
     .wrap{padding:0 22px;}
@@ -1031,11 +1049,13 @@
 
 <section class="section on-paper" id="why">
   <div class="wrap">
-    <div class="section-head reveal">
-      <div class="eyebrow">Why Choose Afribaraka</div>
-      <h2>Value-driven delivery, built on accountability.</h2>
-    </div>
-    <div class="why-flow" id="whyFlow">
+    <div class="why-layout">
+      <div class="why-content">
+        <div class="section-head reveal">
+          <div class="eyebrow">Why Choose Afribaraka</div>
+          <h2>Value-driven delivery, built on accountability.</h2>
+        </div>
+        <div class="why-flow" id="whyFlow">
       <div class="why-flow-row">
         <div class="why-node" style="transition-delay:.05s">
           <div class="why-icon-wrap"><div class="why-icon-glow"></div>
@@ -1109,6 +1129,11 @@
           <h4>Ethical &amp; Transparent</h4>
           <p>Business practices built on integrity from quote to completion.</p>
         </div>
+      </div>
+    </div>
+      </div>
+      <div class="why-image">
+        <img src="https://i.ibb.co/XkVSWCR0/people.png" alt="Afribaraka team" loading="lazy">
       </div>
     </div>
   </div>
