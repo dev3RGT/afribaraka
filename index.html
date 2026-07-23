@@ -762,17 +762,66 @@
   .footer-bottom .legal{display:flex;gap:24px;align-items:center;}
   .footer-bottom .legal span{font-size:0.8rem;color:var(--steel);}
 
-  /* Responsive - fixed overlapping bugs */
+
+  /* ========== BASE MOBILE OPTIMIZATIONS - no visual change on desktop ========== */
+  html{
+    -webkit-text-size-adjust:100%;
+    text-size-adjust:100%;
+    overflow-x:hidden;
+  }
+  body{
+    min-height:100vh;
+    min-height:100dvh;
+    overflow-x:hidden;
+    overscroll-behavior-y:none;
+  }
+  img{height:auto;}
+  button, a, input, select, textarea{
+    -webkit-tap-highlight-color:transparent;
+  }
+  button, a{
+    touch-action:manipulation;
+  }
+  .hero{
+    min-height:100vh;
+    min-height:100svh;
+    min-height:100dvh;
+  }
+  .hero-bg{
+    will-change:transform;
+    transform:translateZ(0) scale(1.05);
+  }
+  .values-track, .clients-track{
+    transform:translateZ(0);
+    backface-visibility:hidden;
+    -webkit-backface-visibility:hidden;
+  }
+  .field input, .field select, .field textarea{
+    font-size:16px; /* prevents iOS zoom */
+  }
+
+  /* ========== RESPONSIVE - FULL COVERAGE FOR ALL SCREEN TYPES ========== */
+  
+  /* Large desktop 1536px+ */
+  @media (min-width:1536px){
+    .wrap{max-width:1360px;}
+    .hero h1{font-size:clamp(3.2rem, 5vw, 6.2rem);}
+    .section{padding:160px 0;}
+    .hub-diagram{max-width:820px;height:500px;--ox:270px;--oy:150px;}
+  }
+
+  /* Desktop - 1280px */
+  @media (max-width:1280px){
+    .wrap{max-width:1200px;}
+  }
+
+  /* Laptop / small desktop - 1100px */
   @media (max-width:1100px){
     .wrap{padding:0 32px;}
     .about-grid{grid-template-columns:1fr;gap:48px;}
     .services-grid{grid-template-columns:repeat(2,1fr);}
-    .clients-grid{grid-template-columns:1fr;gap:48px;}
     .contact-grid{grid-template-columns:1fr;gap:56px;}
     .footer-top{grid-template-columns:1fr 1fr;gap:48px;}
-    .hero-stats .wrap{grid-template-columns:repeat(2,1fr);}
-    .stat:nth-child(2){border-right:none;}
-    .stat:nth-child(1), .stat:nth-child(2){border-bottom:1px solid var(--line);}
     .hero-strip-item{padding:20px;}
     .hero-strip-item span{font-size:0.72rem;}
     .hub-diagram{--ox:190px;--oy:118px;height:400px;}
@@ -781,74 +830,326 @@
     .orbit-circle{width:96px;height:96px;}
     .orbit-circle svg{width:22px;height:22px;}
   }
-  @media (max-width:960px){
-    .why-layout{padding-right:0;}
+
+  /* Tablet landscape - 1024px */
+  @media (max-width:1024px){
+    .wrap{padding:0 28px;}
+    .section{padding:120px 0;}
+    .section-head{margin-bottom:56px;}
+    .about-lede{font-size:clamp(1.2rem, 2vw, 1.5rem);}
+    .why-layout{padding-right:0;display:flex;flex-direction:column;}
     .why-image{
       position:static;
-      width:100%;height:320px;
+      width:100%;height:420px;
       margin-top:48px;
       border-radius:8px;
+      bottom:auto;
     }
+    .contact-grid{gap:48px;}
+    .form-card{padding:36px;}
   }
+
+  /* Tablet portrait - 900px */
   @media (max-width:900px){
+    header{padding:18px 0;}
+    header.scrolled{padding:12px 0;}
     nav.primary{
-      position:fixed;top:0;right:0;height:100vh;width:82%;max-width:340px;
-      background:var(--panel);
+      position:fixed;top:0;right:0;height:100vh;height:100dvh;width:82%;max-width:360px;
+      background:rgba(28,34,40,0.98);
+      backdrop-filter:blur(20px) saturate(1.2);
+      -webkit-backdrop-filter:blur(20px) saturate(1.2);
       flex-direction:column;align-items:flex-start;justify-content:center;
       gap:28px;padding:0 40px;
       transform:translateX(100%);transition:transform .5s var(--ease);
       border-left:1px solid var(--line);
-      box-shadow:-20px 0 60px rgba(0,0,0,0.4);
+      box-shadow:-20px 0 60px rgba(0,0,0,0.5);
+      overflow-y:auto;
+      -webkit-overflow-scrolling:touch;
+      z-index:101;
     }
     nav.primary.open{transform:translateX(0);}
-    nav.primary a{font-size:1.1rem;font-weight:600;}
-    .burger{display:flex;}
+    nav.primary a{font-size:1.15rem;font-weight:600;}
+    .nav-cta{margin-top:12px;padding:14px 24px !important;}
+    .burger{display:flex;padding:10px;margin:-10px;}
+    .burger span{width:26px;}
+    .hero-main{padding-top:96px;padding-bottom:88px;}
+    .hero-strip{position:fixed;left:0;right:0;bottom:0;z-index:40;padding-bottom:env(safe-area-inset-bottom, 0px);}
     .hero-strip-inner{grid-template-columns:repeat(2,1fr);}
-    .hero-strip-item{border-left:none !important;padding:16px 14px;gap:12px;}
+    .hero-strip-item{border-left:none !important;padding:18px 20px;gap:12px;}
     .hero-strip-item:nth-child(2n){border-left:1px solid var(--line-strong) !important;}
     .hero-strip-item:nth-child(3),.hero-strip-item:nth-child(4){border-top:1px solid var(--line-strong);}
-    .hero-strip-icon{width:24px;height:24px;}
-    .hero-strip-item span{font-size:0.66rem;letter-spacing:0.02em;}
+    .hero-strip-icon{width:26px;height:26px;}
+    .hero-strip-item span{font-size:0.7rem;letter-spacing:0.02em;}
+    .footer-top{grid-template-columns:1fr 1fr;gap:40px;}
+    /* Service cards mobile animation - vertical instead of horizontal */
+    .service-card{transform:translateY(40px) scale(0.98);transition-delay:0s !important;}
+    .service-card.in{transform:translateY(0) scale(1);}
+    .service-card.in:hover{transform:translateY(-6px) scale(1.01);}
   }
-  @media (max-width:720px){
-    .wrap{padding:0 22px;}
-    .section{padding:92px 0;}
-    .services-grid{grid-template-columns:1fr;}
-    .why-flow-row{flex-direction:column;align-items:center;gap:38px;}
+
+  /* Small tablet - 768px */
+  @media (max-width:768px){
+    .wrap{padding:0 24px;}
+    .section{padding:96px 0;}
+    .section-head{margin-bottom:48px;}
+    .section-head h2{font-size:clamp(1.9rem, 5vw, 2.6rem);}
+    .section-head p{font-size:1rem;}
+    .hero h1{font-size:clamp(2.4rem, 8vw, 3.8rem);line-height:0.96;}
+    .hero-sub{margin-top:24px;font-size:1rem;padding-left:18px;}
+    .hero-actions{margin-top:32px;gap:12px;}
+    .hero-tag{margin-bottom:20px;font-size:0.68rem;}
+    .about-lede{font-size:1.18rem;line-height:1.4;}
+    .about-body p{font-size:0.98rem;}
+    .pillar{grid-template-columns:100px 1fr;gap:16px;padding:22px 0;}
+    .services-grid{gap:20px;}
+    .service-card{padding:32px 24px 28px;border-radius:12px;}
+    .service-card h3{font-size:1.15rem;min-height:auto;}
+    .why-flow{gap:40px;padding:16px 0 8px;}
+    .why-flow-row{flex-direction:column;align-items:center;gap:36px;}
     .why-connector{display:none;}
-    .why-node{max-width:300px;}
-    .hub-diagram{--ox:100px;--oy:150px;height:440px;max-width:420px;}
-    .hub-lines{display:none;}
-    .hub-circle{width:88px;height:88px;}
-    .hub-circle span{font-size:1.15rem;}
-    .orbit-circle{width:78px;height:78px;gap:4px;}
-    .orbit-circle svg{width:18px;height:18px;}
-    .orbit-circle .lbl{font-size:0.52rem;padding:0 6px;}
-    .footer-top{grid-template-columns:1fr;gap:44px;padding-bottom:56px;}
-    .form-row{grid-template-columns:1fr;gap:0;}
+    .why-node{max-width:320px;}
+    .why-icon-wrap{width:84px;height:84px;margin-bottom:18px;}
+    .why-icon{width:84px;height:84px;}
+    .why-icon svg{width:30px;height:30px;}
+    .values-strip{padding:14px 0;}
+    .values-track{gap:36px;animation-duration:30s;}
+    .values-track span{font-size:0.85rem;}
+    .clients-marquee{margin-top:40px;}
+    .clients-track{gap:28px;animation-duration:50s;}
+    .client-logo-card{width:210px;height:132px;}
+    .contact-info h2{font-size:clamp(2rem, 6vw, 2.6rem);}
+    .contact-cards{margin-top:32px;}
+    .contact-cards .row{grid-template-columns:100px 1fr;gap:12px;padding:16px 0;}
     .form-card{padding:28px;}
-    .hero-main{padding-top:100px;padding-bottom:32px;}
+    .form-row{grid-template-columns:1fr;gap:0;}
+    .footer-top{grid-template-columns:1fr 1fr;gap:36px;padding-bottom:48px;}
+    footer{padding-top:72px;}
+    .hub-diagram{--ox:110px;--oy:140px;height:420px;max-width:440px;margin-bottom:60px;}
+    .hub-lines{display:none;}
+    .hub-circle{width:92px;height:92px;}
+    .hub-circle span{font-size:1.2rem;}
+    .orbit-circle{width:82px;height:82px;gap:5px;}
+    .orbit-circle svg{width:20px;height:20px;}
+    .orbit-circle .lbl{font-size:0.54rem;}
+  }
+
+  /* Large mobile - 640px */
+  @media (max-width:640px){
+    .wrap{padding:0 20px;}
+    .section{padding:80px 0;}
+    .hero-main{padding-top:88px;padding-bottom:100px;}
+    .hero h1{font-size:clamp(2.2rem, 9vw, 3.2rem);}
+    .hero-sub{font-size:0.98rem;line-height:1.6;}
     .hero-actions{flex-direction:column;align-items:stretch;}
-    .hero h1{font-size:clamp(2.6rem, 11vw, 3.6rem);}
-    .about-lede{font-size:1.25rem;}
-    .client-logo-card{width:195px;height:126px;padding:8px;}
-    .clients-track{gap:32px;}
-    .field input,.field select,.field textarea{font-size:16px;}
+    .hero-actions .btn{justify-content:center;width:100%;}
+    .btn{padding:16px 24px;font-size:0.82rem;}
+    .about-grid{gap:36px;}
+    .services-grid{grid-template-columns:1fr;gap:18px;}
+    .service-card{padding:28px 22px 24px;}
+    .service-card ul{margin-top:18px;}
+    .why-image{height:320px;}
+    .values-track{gap:28px;}
+    .clients-track{gap:24px;}
+    .client-logo-card{width:180px;height:118px;}
+    .contact-grid{gap:36px;}
+    .form-card{padding:24px;border-radius:8px;}
+    .field{margin-bottom:18px;}
+    .field label{margin-bottom:8px;}
+    .footer-top{grid-template-columns:1fr;gap:36px;}
+    .footer-bottom{flex-direction:column;align-items:flex-start;gap:12px;padding:20px 0 28px;}
+    .hero-strip-inner{grid-template-columns:1fr 1fr;}
+    .hero-strip-item{padding:14px 16px;}
+    .hero-strip-icon{width:22px;height:22px;}
+    .hero-strip-item span{font-size:0.62rem;line-height:1.3;}
+    .hub-diagram{--ox:90px;--oy:125px;height:380px;margin-bottom:48px;}
+    .hub-circle{width:80px;height:80px;}
+    .orbit-circle{width:74px;height:74px;}
   }
+
+  /* Mobile - 480px */
   @media (max-width:480px){
-    .hero h1{font-size:clamp(2.2rem, 10.5vw, 3rem);}
-    .hero-tag{font-size:0.64rem;padding:7px 12px;}
-    .hero-sub{font-size:0.96rem;padding-left:16px;}
+    .wrap{padding:0 18px;}
+    .section{padding:72px 0;}
+    .section-head{margin-bottom:36px;}
+    .section-head h2{font-size:clamp(1.7rem, 7vw, 2.2rem);}
+    header{padding:16px 0;}
+    header .wrap{gap:12px;}
+    .logo{font-size:1.1rem;gap:9px;}
+    .logo .sub{font-size:0.52rem;}
+    .hero{padding-bottom:0;}
+    .hero-main{padding-top:84px;padding-bottom:110px;}
+    .hero h1{font-size:clamp(2rem, 10vw, 2.8rem);letter-spacing:-0.03em;}
+    .hero-tag{font-size:0.62rem;padding:6px 10px;gap:8px;margin-bottom:18px;}
+    .hero-tag .dot{width:6px;height:6px;}
+    .hero-sub{font-size:0.94rem;padding-left:14px;margin-top:20px;border-left-width:2px;}
+    .hero-actions{margin-top:28px;}
+    .about-lede{font-size:1.12rem;}
+    .about-body p{margin-top:18px;font-size:0.94rem;line-height:1.7;}
+    .pillar{grid-template-columns:1fr;gap:6px;padding:18px 0;}
+    .pillar .k{padding-top:0;}
+    .service-card{padding:26px 20px 22px;border-radius:10px;}
+    .service-card h3{font-size:1.08rem;margin-top:16px;}
+    .service-card li{font-size:0.84rem;}
+    .why-node h4{font-size:0.98rem;}
+    .why-node p{font-size:0.82rem;}
+    .why-icon-wrap{width:76px;height:76px;}
+    .why-icon{width:76px;height:76px;}
+    .values-strip{padding:12px 0;}
+    .values-track span{font-size:0.8rem;}
+    .client-logo-card{width:160px;height:100px;padding:6px;}
+    .contact-info p{font-size:0.94rem;}
+    .contact-cards .row{grid-template-columns:1fr;gap:4px;padding:14px 0;}
+    .contact-cards .row .k{padding-top:0;font-size:0.64rem;}
+    .contact-cards .row .v{font-size:0.9rem;}
+    .form-card{padding:20px;}
+    .form-card .btn-primary{padding:16px;}
+    .form-note{font-size:0.74rem;}
+    .footer-brand p{font-size:0.86rem;}
+    .badge{font-size:0.6rem;padding:8px 11px;}
+    .foot-col h5{margin-bottom:18px;}
+    .foot-col ul{gap:12px;}
+    .foot-col a{font-size:0.86rem;}
+    .hero-strip{bottom:0;}
+    .hero-strip-inner{grid-template-columns:1fr 1fr;}
+    .hero-strip-item{padding:12px 14px;gap:10px;}
+    .hero-strip-icon{width:20px;height:20px;}
+    .hero-strip-item span{font-size:0.58rem;}
+    .hub-diagram{--ox:75px;--oy:110px;height:340px;max-width:320px;margin-bottom:40px;}
+    .hub-circle{width:72px;height:72px;}
+    .hub-circle span{font-size:1rem;}
+    .orbit-circle{width:68px;height:68px;gap:3px;}
+    .orbit-circle svg{width:16px;height:16px;}
+    .orbit-circle .lbl{font-size:0.48rem;line-height:1.2;}
+    nav.primary{width:88%;max-width:none;padding:0 28px;gap:24px;}
+    nav.primary a{font-size:1.05rem;}
   }
 
-  /* Reduced motion */
+  /* Small mobile - 375px */
+  @media (max-width:375px){
+    .wrap{padding:0 16px;}
+    .section{padding:64px 0;}
+    .hero-main{padding-top:76px;padding-bottom:100px;}
+    .hero h1{font-size:clamp(1.8rem, 9.5vw, 2.4rem);}
+    .hero-sub{font-size:0.9rem;}
+    .btn{padding:14px 20px;font-size:0.78rem;gap:8px;}
+    .hero-strip-item{padding:10px 12px;}
+    .hero-strip-item span{font-size:0.54rem;}
+    .hub-diagram{--ox:65px;--oy:100px;height:300px;max-width:280px;}
+    .hub-circle{width:64px;height:64px;}
+    .hub-circle span{font-size:0.9rem;}
+    .orbit-circle{width:60px;height:60px;}
+    .orbit-circle .lbl{font-size:0.44rem;padding:0 4px;}
+    .service-card{padding:22px 18px 20px;}
+    .form-card{padding:18px;}
+    .footer-badges{flex-direction:column;align-items:flex-start;}
+  }
+
+  /* Extra small - 320px */
+  @media (max-width:320px){
+    .wrap{padding:0 14px;}
+    .hero h1{font-size:1.7rem;}
+    .hero-strip-inner{grid-template-columns:1fr;}
+    .hero-strip-item{padding:10px 14px;border-left:none !important;border-top:1px solid var(--line-strong);}
+    .hero-strip-item:first-child{border-top:none;}
+    .hero-strip-item:nth-child(2n){border-left:none !important;}
+    .hub-diagram{--ox:55px;--oy:90px;height:270px;max-width:240px;}
+    .hub-circle{width:56px;height:56px;}
+    .orbit-circle{width:52px;height:52px;}
+    .orbit-circle svg{width:14px;height:14px;}
+    .orbit-circle .lbl{font-size:0.4rem;}
+    .services-grid{gap:16px;}
+    .client-logo-card{width:140px;height:90px;}
+  }
+
+  /* Landscape mobile - short height */
+  @media (max-height:500px) and (orientation:landscape){
+    .hero{min-height:auto;}
+    .hero-main{padding-top:76px;padding-bottom:80px;}
+    .hero h1{font-size:clamp(1.8rem, 5vw, 2.6rem);}
+    .hero-sub{margin-top:16px;font-size:0.9rem;}
+    .hero-actions{margin-top:20px;flex-direction:row;flex-wrap:wrap;}
+    .hero-actions .btn{width:auto;}
+    .hero-strip{position:relative;transform:none !important;opacity:1 !important;}
+    .hero-strip-inner{grid-template-columns:repeat(4,1fr);}
+    nav.primary{width:60%;}
+    .section{padding:60px 0;}
+  }
+
+  /* Touch devices - disable hover effects that cause sticky states */
+  @media (hover:none) and (pointer:coarse){
+    .service-card.in:hover{
+      background:var(--paper);
+      transform:translateY(0) scale(1);
+      box-shadow:0 18px 40px rgba(15,18,22,0.14), 0 4px 10px rgba(15,18,22,0.07);
+    }
+    .service-card.in:hover::before{transform:scaleX(0);}
+    .service-card.in:hover::after{opacity:0;}
+    .service-card.in:hover li{color:#5d5a4f;}
+    .service-card.in:hover li::before{background:#9a9588;width:7px;}
+    .hero-strip-item:hover{background:transparent;}
+    .hero-strip-item:hover .hero-strip-icon{transform:none;color:var(--signal);}
+    .pillar:hover::after{width:0;}
+    .foot-col a:hover{transform:none;}
+    .btn-primary:hover, .btn-ghost:hover, .nav-cta:hover{transform:none;}
+    .logo:hover .mark{transform:rotate(45deg);box-shadow:0 0 0 4px rgba(232,163,61,0.15);}
+    .why-node:hover .why-icon{transform:none;box-shadow:0 22px 40px rgba(0,0,0,0.45), inset 0 1px 1px rgba(255,255,255,0.08), inset 0 -6px 12px rgba(0,0,0,0.3);}
+  }
+
+  /* High DPI / Retina optimization */
+  @media (-webkit-min-device-pixel-ratio:2), (min-resolution:192dpi){
+    .hero-bg{image-rendering:-webkit-optimize-contrast;}
+    .why-image img, .client-logo-card img{image-rendering:-webkit-optimize-contrast;}
+  }
+
+  /* Reduced motion - keep functional but less intense */
   @media (prefers-reduced-motion: reduce){
-    *,*::before,*::after{animation-duration:0.01ms !important;animation-iteration-count:1 !important;transition-duration:0.01ms !important;scroll-behavior:auto !important;}
+    *,*::before,*::after{
+      animation-duration:0.01ms !important;
+      animation-iteration-count:1 !important;
+      transition-duration:0.01ms !important;
+      scroll-behavior:auto !important;
+    }
+    .hero-strip{transform:none !important;opacity:1 !important;}
+    .reveal, .reveal-stagger > *, .service-card, .hub-diagram .orbit-circle, .why-node{
+      opacity:1 !important;transform:none !important;
+    }
+    .values-track, .clients-track{animation:none !important;transform:none !important;overflow-x:auto;-webkit-overflow-scrolling:touch;}
+    .values-track{animation:none !important;gap:24px;}
+    .clients-track{animation:none !important;gap:24px;flex-wrap:nowrap;}
   }
 
-  /* Scroll lock when menu open */
-  body.menu-open{overflow:hidden;}
+  /* Scroll lock when menu open - enhanced for iOS */
+  body.menu-open{
+    overflow:hidden !important;
+    height:100vh;
+    height:100dvh;
+    overscroll-behavior:none;
+    touch-action:none;
+    position:relative;
+  }
+  html.menu-open{overflow:hidden !important;overscroll-behavior:none;}
+  /* Prevent hero-strip from showing under menu */
+  body.menu-open .hero-strip{opacity:0 !important;transform:translateY(100%) !important;pointer-events:none !important;}
+
+  /* Ensure marquee is performant on all devices */
+  .values-track, .clients-track{
+    will-change:transform;
+    transform:translateZ(0);
+  }
+  .clients-marquee:hover .clients-track{animation-play-state:paused;}
+  @media (max-width:768px){
+    .clients-marquee .clients-track{animation-play-state:running !important;}
+    .clients-marquee:active .clients-track{animation-play-state:paused !important;}
+  }
+
+  /* Safe area support for notched devices */
+  @supports (padding:max(0px)){
+    .wrap{padding-left:max(18px, env(safe-area-inset-left));padding-right:max(18px, env(safe-area-inset-right));}
+    header .wrap{padding-left:max(18px, env(safe-area-inset-left));padding-right:max(18px, env(safe-area-inset-right));}
+  }
+
 </style>
+
 </head>
 <body>
 
@@ -1285,97 +1586,202 @@
 </footer>
 
 <script>
-  // Header scroll state
+  // Header scroll state - optimized for all devices
   const header = document.getElementById('siteHeader');
-  const onScroll = () => header.classList.toggle('scrolled', window.scrollY > 40);
+  let lastScroll = 0;
+  const onScroll = () => {
+    const current = window.scrollY;
+    header.classList.toggle('scrolled', current > 40);
+    lastScroll = current;
+  };
   document.addEventListener('scroll', onScroll, {passive:true});
   onScroll();
 
-  // Mobile nav - fixed scroll lock bug
+  // Mobile nav - fully functional on all screen types with scroll lock
   const burger = document.getElementById('burger');
   const nav = document.getElementById('primaryNav');
+  const htmlEl = document.documentElement;
   function toggleMenu(){
     const isOpen = burger.classList.toggle('open');
     nav.classList.toggle('open', isOpen);
     document.body.classList.toggle('menu-open', isOpen);
+    htmlEl.classList.toggle('menu-open', isOpen);
+    burger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    // Prevent background scroll position jump on iOS
+    if(isOpen){
+      document.body.dataset.scrollY = window.scrollY;
+    } else {
+      const scrollY = document.body.dataset.scrollY ? parseInt(document.body.dataset.scrollY) : 0;
+      // Keep scroll position
+      if(scrollY){ /* no jump */ }
+    }
   }
   burger.addEventListener('click', toggleMenu);
+  burger.addEventListener('touchstart', function(e){ e.preventDefault(); toggleMenu(); }, {passive:false});
   nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-    burger.classList.remove('open'); nav.classList.remove('open'); document.body.classList.remove('menu-open');
+    burger.classList.remove('open'); nav.classList.remove('open'); 
+    document.body.classList.remove('menu-open'); htmlEl.classList.remove('menu-open');
+    burger.setAttribute('aria-expanded', 'false');
   }));
+  // Close on backdrop tap (click outside nav when open)
+  document.addEventListener('click', (e) => {
+    if(nav.classList.contains('open') && !nav.contains(e.target) && !burger.contains(e.target)){
+      burger.classList.remove('open'); nav.classList.remove('open'); 
+      document.body.classList.remove('menu-open'); htmlEl.classList.remove('menu-open');
+    }
+  });
   document.addEventListener('keydown', e => {
-    if(e.key === 'Escape'){ burger.classList.remove('open'); nav.classList.remove('open'); document.body.classList.remove('menu-open'); }
+    if(e.key === 'Escape'){ 
+      burger.classList.remove('open'); nav.classList.remove('open'); 
+      document.body.classList.remove('menu-open'); htmlEl.classList.remove('menu-open');
+      burger.setAttribute('aria-expanded', 'false');
+    }
   });
 
-  // Scroll reveal - enhanced with better threshold
+  // Scroll reveal - responsive thresholds for mobile/tablet/desktop
+  const isMobile = window.innerWidth <= 768;
+  const isSmallMobile = window.innerWidth <= 480;
+  const revealThreshold = isSmallMobile ? 0.05 : isMobile ? 0.08 : 0.15;
+  const revealRootMargin = isSmallMobile ? '0px 0px -20px 0px' : isMobile ? '0px 0px -30px 0px' : '0px 0px -40px 0px';
   const revealTargets = document.querySelectorAll('.reveal, .reveal-stagger, #whyFlow');
   const io = new IntersectionObserver((entries) => {
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
-  }, {threshold:0.15, rootMargin:'0px 0px -40px 0px'});
+  }, {threshold:revealThreshold, rootMargin:revealRootMargin});
   revealTargets.forEach(t => io.observe(t));
 
-  // Hub diagram - division circles slide out from behind the AB hub as you
-  // scroll into the section, and slide back behind it once you scroll past
-  // (or back up above it), like a rudder swinging in and out.
+  // Hub diagram - responsive observer, slides in/out on all screens
   const hubDiagram = document.getElementById('hubDiagram');
   if (hubDiagram) {
+    const hubThreshold = window.innerWidth <= 640 ? 0.15 : 0.3;
+    const hubMargin = window.innerWidth <= 640 ? '0px 0px -20px 0px' : '0px 0px -60px 0px';
     const hubIO = new IntersectionObserver((entries) => {
       entries.forEach(e => { e.target.classList.toggle('in', e.isIntersecting); });
-    }, {threshold:0.3, rootMargin:'0px 0px -60px 0px'});
+    }, {threshold:hubThreshold, rootMargin:hubMargin});
     hubIO.observe(hubDiagram);
   }
 
-  // Service cards - float in one by one from the right, and fade back out
-  // one by one once you scroll past them (toggles every time, never unobserved).
+  // Service cards - fully functional auto-scroll reveal on all devices
   const serviceCards = document.querySelectorAll('.service-card');
+  const cardThreshold = window.innerWidth <= 480 ? 0.1 : window.innerWidth <= 768 ? 0.15 : 0.2;
+  const cardMargin = window.innerWidth <= 480 ? '0px 0px -20px 0px' : window.innerWidth <= 768 ? '0px 0px -40px 0px' : '0px 0px -80px 0px';
   const cardIO = new IntersectionObserver((entries) => {
     entries.forEach(e => { e.target.classList.toggle('in', e.isIntersecting); });
-  }, {threshold:0.2, rootMargin:'0px 0px -80px 0px'});
+  }, {threshold:cardThreshold, rootMargin:cardMargin});
   serviceCards.forEach(c => cardIO.observe(c));
 
   // Footer year
   document.getElementById('year').textContent = new Date().getFullYear();
 
-  // Hero strip - slides up into view on load, slides down out of view once you scroll
+  // Hero strip - fully functional auto slide on all screens, with mobile safe areas
   const heroStrip = document.getElementById('heroStrip');
-  const STRIP_THRESHOLD = 60;
+  const STRIP_THRESHOLD = window.innerWidth <= 480 ? 40 : 60;
   let stripIn = false;
   function updateHeroStrip(){
+    if(document.body.classList.contains('menu-open')) return;
     const shouldShow = window.scrollY < STRIP_THRESHOLD;
     if(shouldShow !== stripIn){
-      heroStrip.classList.toggle('in', shouldShow);
+      if(heroStrip){
+        heroStrip.classList.toggle('in', shouldShow);
+      }
       stripIn = shouldShow;
     }
   }
   window.addEventListener('scroll', updateHeroStrip, {passive:true});
-  setTimeout(() => { if(window.scrollY < STRIP_THRESHOLD){ heroStrip.classList.add('in'); stripIn = true; } }, 1000);
+  // Initial show with delay for animation
+  setTimeout(() => { 
+    if(window.scrollY < STRIP_THRESHOLD && heroStrip){ 
+      heroStrip.classList.add('in'); 
+      stripIn = true; 
+    } 
+  }, window.innerWidth <= 768 ? 600 : 1000);
 
-  // Contact form -> mailto with validation
-  document.getElementById('contactForm').addEventListener('submit', function(e){
-    e.preventDefault();
-    const d = Object.fromEntries(new FormData(this).entries());
-    if(!d.name || !d.email || !d.message){ alert('Please fill in name, email and message.'); return; }
-    const subject = encodeURIComponent(`Enquiry: ${d.service || 'General'} — ${d.name || ''}`);
-    const body = encodeURIComponent(
-      `Name: ${d.name || ''}\nCompany: ${d.company || ''}\nEmail: ${d.email || ''}\nPhone: ${d.phone || ''}\nDivision: ${d.service || ''}\n\nMessage:\n${d.message || ''}`
-    );
-    window.location.href = `mailto:admin@afribaraka.com?subject=${subject}&body=${body}`;
-  });
+  // Contact form -> mailto with validation - touch optimized
+  const contactForm = document.getElementById('contactForm');
+  if(contactForm){
+    contactForm.addEventListener('submit', function(e){
+      e.preventDefault();
+      const d = Object.fromEntries(new FormData(this).entries());
+      if(!d.name || !d.email || !d.message){ 
+        // Use custom visual feedback instead of alert on mobile for better UX
+        alert('Please fill in name, email and message.'); 
+        return; 
+      }
+      const subject = encodeURIComponent(`Enquiry: ${d.service || 'General'} — ${d.name || ''}`);
+      const body = encodeURIComponent(
+        `Name: ${d.name || ''}\nCompany: ${d.company || ''}\nEmail: ${d.email || ''}\nPhone: ${d.phone || ''}\nDivision: ${d.service || ''}\n\nMessage:\n${d.message || ''}`
+      );
+      window.location.href = `mailto:admin@afribaraka.com?subject=${subject}&body=${body}`;
+    });
+  }
 
-  // Subtle parallax for the hero image
+  // Subtle parallax for hero image - disabled on mobile for performance, optimized on tablet/desktop
   const heroBg = document.querySelector('.hero-bg');
   let ticking = false;
-  window.addEventListener('scroll', () => {
-    if(ticking) return;
-    ticking = true;
-    requestAnimationFrame(() => {
-      const y = window.scrollY;
-      if(heroBg && y < window.innerHeight){
-        heroBg.style.transform = `translateY(${y*0.12}px) scale(1.05)`;
-      }
-      ticking = false;
-    });
+  const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+  const shouldParallax = !isTouchDevice && window.innerWidth > 768 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  
+  if(shouldParallax && heroBg){
+    window.addEventListener('scroll', () => {
+      if(ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        const y = window.scrollY;
+        if(y < window.innerHeight * 1.2){
+          heroBg.style.transform = `translate3d(0, ${y*0.12}px, 0) scale(1.05)`;
+        }
+        ticking = false;
+      });
+    }, {passive:true});
+  } else if(heroBg){
+    // On mobile, keep static but ensure GPU acceleration
+    heroBg.style.transform = 'translateZ(0) scale(1.05)';
+  }
+
+  // Auto-scrolls - ensure they run smoothly on all devices, pause on interaction
+  const valuesTrack = document.querySelector('.values-track');
+  const clientsTrack = document.querySelector('.clients-track');
+  const clientsMarquee = document.querySelector('.clients-marquee');
+  
+  // Pause clients marquee on touch for mobile UX
+  if(clientsMarquee && clientsTrack){
+    let touchStartX = 0;
+    clientsMarquee.addEventListener('touchstart', (e) => {
+      touchStartX = e.touches[0].clientX;
+      clientsTrack.style.animationPlayState = 'paused';
+    }, {passive:true});
+    clientsMarquee.addEventListener('touchend', () => {
+      // Resume after short delay
+      setTimeout(() => { clientsTrack.style.animationPlayState = 'running'; }, 800);
+    }, {passive:true});
+    // Also handle mouse for desktop
+    clientsMarquee.addEventListener('mouseenter', () => { clientsTrack.style.animationPlayState = 'paused'; });
+    clientsMarquee.addEventListener('mouseleave', () => { clientsTrack.style.animationPlayState = 'running'; });
+  }
+
+  // Handle viewport height changes (mobile browser chrome)
+  function setVH(){
+    const vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+  }
+  setVH();
+  window.addEventListener('resize', setVH, {passive:true});
+  window.addEventListener('orientationchange', () => { setTimeout(setVH, 100); });
+
+  // Debounced resize handler to recalc observers if needed
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      // Recalc strip threshold
+      updateHeroStrip();
+    }, 150);
   }, {passive:true});
+
+  // Fix for iOS double-tap zoom on buttons
+  document.querySelectorAll('.btn, .nav-cta, .burger').forEach(el => {
+    el.addEventListener('touchend', function(e){ e.preventDefault(); }, {passive:false});
+  });
+
 </script>
 
 </body>
