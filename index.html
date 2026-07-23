@@ -426,17 +426,30 @@
   .services-grid{
     display:grid;
     grid-template-columns:repeat(4,1fr);
-    gap:1px;
-    background:#d8d2bf;
-    border:1px solid #d8d2bf;
+    gap:26px;
+    perspective:1600px;
   }
   .service-card{
     background:var(--paper);
     padding:42px 32px 36px;
-    transition:all .5s var(--ease);
     position:relative;
     overflow:hidden;
+    border-radius:14px;
+    box-shadow:0 18px 40px rgba(15,18,22,0.14), 0 4px 10px rgba(15,18,22,0.07);
+    transform-style:preserve-3d;
+    opacity:0;
+    transform:translateX(90px) rotateY(-10deg) translateY(0) rotateX(0deg) scale(1);
+    transition:opacity .8s var(--ease-out), transform .8s var(--ease-out), box-shadow .5s var(--ease), background .5s var(--ease);
+    will-change:transform,opacity;
   }
+  .service-card.in{
+    opacity:1;
+    transform:translateX(0) rotateY(0deg) translateY(0) rotateX(0deg) scale(1);
+  }
+  .service-card:nth-child(1){transition-delay:0s;}
+  .service-card:nth-child(2){transition-delay:.14s;}
+  .service-card:nth-child(3){transition-delay:.28s;}
+  .service-card:nth-child(4){transition-delay:.42s;}
   .service-card::before{
     content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--earth);
     transform:scaleX(0);transform-origin:left;
@@ -448,14 +461,14 @@
     opacity:0;transition:opacity .5s;
     pointer-events:none;
   }
-  .service-card:hover{
+  .service-card.in:hover{
     background:#ece7da;
-    transform:translateY(-4px);
-    box-shadow:var(--shadow-card);
+    transform:translateX(0) rotateY(0deg) translateY(-10px) rotateX(3deg) scale(1.02);
+    box-shadow:0 32px 58px rgba(15,18,22,0.22), 0 12px 26px rgba(15,18,22,0.12);
     z-index:2;
   }
-  .service-card:hover::before{transform:scaleX(1);}
-  .service-card:hover::after{opacity:1;}
+  .service-card.in:hover::before{transform:scaleX(1);}
+  .service-card.in:hover::after{opacity:1;}
   .service-card .idx{
     font-family:'IBM Plex Mono',monospace;
     font-size:0.7rem;color:var(--earth);letter-spacing:0.14em;
@@ -483,8 +496,8 @@
     content:'';position:absolute;left:0;top:9px;width:7px;height:1px;background:#9a9588;
     transition:width .3s, background .3s;
   }
-  .service-card:hover li{color:#3a382f;}
-  .service-card:hover li::before{background:var(--earth);width:10px;}
+  .service-card.in:hover li{color:#3a382f;}
+  .service-card.in:hover li::before{background:var(--earth);width:10px;}
 
   /* Why us - dark theme (alternates with the now-light services section) */
   .why{background:var(--ink-soft);}
@@ -875,7 +888,7 @@
       </svg>
     </div>
 
-    <div class="services-grid reveal-stagger">
+    <div class="services-grid" id="servicesGrid">
       <div class="service-card">
         <div class="idx">01 / Comms</div>
         <h3>Communications, Media &amp; Advertising</h3>
@@ -1103,6 +1116,14 @@
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
   }, {threshold:0.15, rootMargin:'0px 0px -40px 0px'});
   revealTargets.forEach(t => io.observe(t));
+
+  // Service cards - float in one by one from the right, and fade back out
+  // one by one once you scroll past them (toggles every time, never unobserved).
+  const serviceCards = document.querySelectorAll('.service-card');
+  const cardIO = new IntersectionObserver((entries) => {
+    entries.forEach(e => { e.target.classList.toggle('in', e.isIntersecting); });
+  }, {threshold:0.2, rootMargin:'0px 0px -80px 0px'});
+  serviceCards.forEach(c => cardIO.observe(c));
 
   // Footer year
   document.getElementById('year').textContent = new Date().getFullYear();
