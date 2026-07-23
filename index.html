@@ -125,20 +125,24 @@
   .reveal-stagger.in > *:nth-child(5){transition-delay:0.33s;}
   .reveal-stagger.in > *:nth-child(6){transition-delay:0.4s;}
 
-  /* Header - fixed bugs, no overlap */
+  /* Header - dark solid, not transparent */
   header{
     position:fixed;top:0;left:0;right:0;z-index:100;
-    padding:24px 0;
-    transition:background .4s var(--ease),padding .4s var(--ease),border-color .4s var(--ease);
-    border-bottom:1px solid transparent;
+    padding:18px 0;
+    background:var(--ink-deep);
+    background:#0a0d10;
+    border-bottom:1px solid var(--line);
+    box-shadow:0 4px 30px rgba(0,0,0,0.35);
+    transition:padding .4s var(--ease), box-shadow .4s var(--ease);
   }
   header.scrolled{
-    background:rgba(15,18,22,0.92);
-    backdrop-filter:blur(18px) saturate(1.2);
-    -webkit-backdrop-filter:blur(18px) saturate(1.2);
+    background:#0a0d10;
+    background:var(--ink-deep);
     padding:14px 0;
     border-bottom:1px solid var(--line);
-    box-shadow:0 4px 30px rgba(0,0,0,0.2);
+    box-shadow:0 6px 40px rgba(0,0,0,0.5);
+    backdrop-filter:none;
+    -webkit-backdrop-filter:none;
   }
   header .wrap{display:flex;align-items:center;justify-content:space-between;}
   .logo{
@@ -214,16 +218,7 @@
   .hero-bg{
     position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
   }
-  .hero-grid-overlay{
-    position:absolute;inset:0;z-index:1;
-    background-image:
-      linear-gradient(var(--line) 1px, transparent 1px),
-      linear-gradient(90deg, var(--line) 1px, transparent 1px);
-    background-size:72px 72px;
-    mask-image:radial-gradient(70% 70% at 30% 30%, black 20%, transparent 75%);
-    -webkit-mask-image:radial-gradient(70% 70% at 30% 30%, black 20%, transparent 75%);
-    opacity:0.5;
-  }
+  .hero-grid-overlay{display:none !important;}
   .hero-main{
     flex:1;
     display:flex;
@@ -1041,6 +1036,123 @@
     .values-track, .clients-track{animation:none !important;overflow-x:auto;}
   }
 
+
+  /* Why Choose - overrides per user request: bold dark text 100% visible, icons static */
+  #why.why, #why.section.on-paper, .why{
+    background:var(--paper) !important;
+    color:var(--ink) !important;
+  }
+  #why .section-head h2{
+    color:var(--ink) !important;
+    font-weight:800 !important;
+  }
+  #why .section-head p{
+    color:#3a382f !important;
+    font-weight:600 !important;
+    opacity:1 !important;
+  }
+  #why .eyebrow{color:var(--earth) !important; opacity:1 !important;}
+  #why .eyebrow::before{background:var(--earth) !important;}
+  .why-flow .why-node{
+    opacity:1 !important;
+    transform:none !important;
+  }
+  .why-node h4{
+    color:var(--ink) !important;
+    color:#0f1216 !important;
+    font-weight:800 !important;
+    font-size:1.08rem !important;
+    opacity:1 !important;
+    letter-spacing:-0.01em;
+  }
+  .why-node p{
+    color:#2e2c25 !important;
+    color:#3a382f !important;
+    font-weight:700 !important;
+    font-size:0.9rem !important;
+    line-height:1.6 !important;
+    opacity:1 !important;
+  }
+  .why-icon{
+    animation:none !important;
+    transform:none !important;
+  }
+  .why-icon-wrap{
+    opacity:1 !important;
+  }
+  .why-node:hover .why-icon{
+    transform:none !important;
+    box-shadow:0 22px 40px rgba(0,0,0,0.15), inset 0 1px 1px rgba(255,255,255,0.08);
+  }
+  .why-connector{
+    background:repeating-linear-gradient(90deg, #a8a090 0 6px, transparent 6px 13px) !important;
+    opacity:1 !important;
+  }
+  .why-connector::after{
+    border-left-color:#a8a090 !important;
+  }
+  /* Ensure why-flow reveal is always visible */
+  #whyFlow.reveal, #whyFlow{
+    opacity:1 !important;
+    transform:none !important;
+  }
+  #whyFlow .why-node{
+    opacity:1 !important;
+    transform:none !important;
+  }
+
+  /* Floating back to top button */
+  .back-to-top{
+    position:fixed;
+    right:22px;
+    bottom:22px;
+    bottom:calc(22px + env(safe-area-inset-bottom, 0px));
+    width:52px;
+    height:52px;
+    border-radius:50%;
+    background:var(--signal);
+    color:var(--ink);
+    border:1px solid var(--signal);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    z-index:99;
+    box-shadow:0 12px 30px rgba(0,0,0,0.35), 0 4px 12px rgba(0,0,0,0.2);
+    opacity:0;
+    visibility:hidden;
+    transform:translateY(16px) scale(0.9);
+    transition:opacity .35s var(--ease), transform .35s var(--ease), visibility .35s, background .3s, color .3s, box-shadow .3s;
+    pointer-events:none;
+  }
+  .back-to-top.show{
+    opacity:1;
+    visibility:visible;
+    transform:translateY(0) scale(1);
+    pointer-events:auto;
+  }
+  .back-to-top:hover{
+    background:var(--ink);
+    color:var(--signal);
+    border-color:var(--ink);
+    transform:translateY(-3px) scale(1.05);
+    box-shadow:0 18px 40px rgba(0,0,0,0.45);
+  }
+  .back-to-top svg{
+    width:20px;
+    height:20px;
+    stroke-width:2.2;
+  }
+  @media (max-width:480px){
+    .back-to-top{
+      width:48px;
+      height:48px;
+      right:16px;
+      bottom:16px;
+      bottom:calc(16px + env(safe-area-inset-bottom, 0px));
+    }
+  }
+
 </style>
 
 </head>
@@ -1340,7 +1452,7 @@
     </div>
       </div>
       <div class="why-image">
-        <img src="https://i.ibb.co/XkVSWCR0/people.png" alt="Afribaraka team" loading="lazy">
+        <img src="https://i.ibb.co/Y75c2k0Y/bl.png" alt="Afribaraka team" loading="lazy">
       </div>
     </div>
   </div>
@@ -1383,7 +1495,6 @@
       <div class="client-logo-card" aria-hidden="true"><img src="https://i.postimg.cc/yYyTtqy7/EH-Hassim.png" alt="" loading="lazy"></div>
       <div class="client-logo-card" aria-hidden="true"><img src="https://i.postimg.cc/Njbp9hKm/ks.png" alt="" loading="lazy"></div>
       <div class="client-logo-card" aria-hidden="true"><img src="https://i.postimg.cc/bJ0GrPJr/UCITY.png" alt="" loading="lazy"></div>
-      <div class="client-logo-card" aria-hidden="true"><img src="https://i.ibb.co/jkhV65g3/afr.png" alt="" loading="lazy"></div>
     </div>
   </div>
 </section>
@@ -1601,8 +1712,32 @@ ${d.message || ''}`
     clientsMarquee.addEventListener('touchstart', () => { clientsTrack.style.animationPlayState = 'paused'; }, {passive:true});
     clientsMarquee.addEventListener('touchend', () => { setTimeout(() => { clientsTrack.style.animationPlayState = 'running'; }, 800); }, {passive:true});
   }
+
+  // Floating back to top button - appears when scrolling down
+  const backToTop = document.getElementById('backToTop');
+  if(backToTop){
+    const showAfter = 400;
+    function toggleBackToTop(){
+      if(window.scrollY > showAfter){
+        backToTop.classList.add('show');
+      } else {
+        backToTop.classList.remove('show');
+      }
+    }
+    window.addEventListener('scroll', toggleBackToTop, {passive:true});
+    toggleBackToTop();
+    backToTop.addEventListener('click', () => {
+      window.scrollTo({top:0, behavior:'smooth'});
+    });
+  }
+
 </script>
 
+
+
+<button id="backToTop" class="back-to-top" aria-label="Back to top">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="M6 11l6-6 6 6"/></svg>
+</button>
 
 </body>
 </html>
