@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" href="https://i.postimg.cc/KY7YzCct/afri.png" type="image/png">
 <style>
   :root{
     --ink:#0f1216;
@@ -161,6 +162,12 @@
     transition:transform .4s var(--ease),box-shadow .4s;
   }
   .logo:hover .mark{transform:rotate(135deg);box-shadow:0 0 0 6px rgba(232,163,61,0.22);}
+  .logo-img{
+    height:36px;
+    width:auto;
+    flex-shrink:0;
+    display:block;
+  }
   .logo .sub{
     display:block;
     font-family:'IBM Plex Mono',monospace;
@@ -1319,8 +1326,7 @@
 <header id="siteHeader">
   <div class="wrap">
     <a href="#top" class="logo">
-      <span class="mark"></span>
-      <span>AFRIBARAKA<span class="sub">Pty Ltd &middot; Est. 2016</span></span>
+      <img src="https://i.postimg.cc/KY7YzCct/afri.png" alt="Afribaraka logo" class="logo-img">
     </a>
     <nav class="primary" id="primaryNav">
       <a href="#about">About</a>
@@ -1704,7 +1710,7 @@
   <div class="wrap">
     <div class="footer-top">
       <div class="footer-brand">
-        <a href="#top" class="logo"><span class="mark"></span><span>AFRIBARAKA</span></a>
+        <a href="#top" class="logo"><img src="https://i.postimg.cc/KY7YzCct/afri.png" alt="Afribaraka logo" class="logo-img"><span>AFRIBARAKA</span></a>
         <p>Building Connections, Powering Industries. Integrated communications, mining support, construction and general supplies for South Africa's public and private sectors.</p>
         <div class="footer-badges">
           <div class="badge">Level 1 <strong>B-BBEE</strong></div>
