@@ -388,21 +388,47 @@
     margin-top:8px;
   }
   .about-body p{color:var(--paper-dim);margin-top:22px;font-size:1rem;line-height:1.78;}
-  .pillars{display:flex;flex-direction:column;gap:0;border-top:1px solid var(--line);margin-top:8px;}
+  .pillars{display:flex;flex-direction:column;gap:14px;margin-top:8px;perspective:1200px;}
   .pillar{
-    padding:28px 0;
-    border-bottom:1px solid var(--line);
-    display:grid;grid-template-columns:120px 1fr;gap:24px;
-    transition:background .3s;
     position:relative;
+    height:92px;
+    padding:22px 24px;
+    border:1px solid var(--line);
+    border-radius:14px;
+    background:linear-gradient(160deg, rgba(243,239,230,0.035), rgba(243,239,230,0));
+    display:flex;align-items:flex-start;gap:18px;
+    overflow:hidden;
+    cursor:default;
+    transform-style:preserve-3d;
+    will-change:transform;
+    transition:height .55s var(--ease), transform .45s var(--ease), box-shadow .45s var(--ease), opacity .4s ease, border-color .4s ease, background .4s ease;
   }
-  .pillar::after{
-    content:'';position:absolute;left:0;bottom:-1px;width:0;height:1px;background:var(--signal);
-    transition:width .6s var(--ease);
+  .pillar::before{
+    content:'';position:absolute;left:0;top:0;width:3px;height:100%;background:var(--signal);
+    opacity:0;transition:opacity .4s ease;
   }
-  .pillar:hover::after{width:100%;}
-  .pillar .k{font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--signal);padding-top:2px;font-weight:600;}
-  .pillar .v{color:var(--paper-dim);font-size:0.95rem;line-height:1.7;}
+  .pillar.is-hovered{
+    height:222px;
+    border-color:var(--signal-dim);
+    background:linear-gradient(160deg, rgba(232,163,61,0.09), rgba(243,239,230,0.02));
+    box-shadow:0 30px 60px -20px rgba(0,0,0,.55), 0 0 0 1px rgba(232,163,61,.14);
+    transform:perspective(1000px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateZ(26px);
+  }
+  .pillar.is-hovered::before{opacity:1;}
+  .pillar.is-dimmed{opacity:.4;transform:scale(0.98);}
+  .pillar-icon{
+    flex-shrink:0;width:44px;height:44px;border-radius:10px;
+    display:flex;align-items:center;justify-content:center;
+    background:rgba(232,163,61,0.1);color:var(--signal);
+    transform:translateZ(0);
+    transition:transform .4s var(--ease), background .4s ease, color .4s ease;
+  }
+  .pillar-icon svg{width:20px;height:20px;}
+  .pillar.is-hovered .pillar-icon{background:var(--signal);color:var(--ink);transform:translateZ(14px) scale(1.08);}
+  .pillar-text{min-width:0;}
+  .pillar .k{font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--signal);font-weight:600;display:block;margin-bottom:8px;}
+  .pillar .v{color:var(--paper-dim);font-size:0.95rem;line-height:1.7;opacity:0;transform:translateY(8px);transition:opacity .4s ease .05s, transform .4s var(--ease) .05s;}
+  .pillar.is-hovered .v{opacity:1;transform:translateY(0);}
   .pillar .v strong{color:var(--paper);font-weight:700;}
 
   /* Services - light/paper theme (alternates with dark sections) */
@@ -875,7 +901,9 @@
     .hero-actions{margin-top:32px;gap:12px;}
     .hero-tag{margin-bottom:20px;font-size:0.68rem;}
     .about-lede{font-size:1.18rem;line-height:1.4;}
-    .pillar{grid-template-columns:100px 1fr;gap:16px;padding:22px 0;}
+    .pillar{height:86px;padding:20px 20px;gap:16px;}
+    .pillar.is-hovered{height:210px;}
+    .pillar-icon{width:40px;height:40px;}
     .services-grid{gap:20px;}
     .service-card{padding:32px 24px 28px;border-radius:12px;}
     .service-card h3{font-size:1.15rem;min-height:auto;}
@@ -950,7 +978,10 @@
     .hero-sub{font-size:0.94rem;padding-left:14px;margin-top:20px;}
     .hero-actions{margin-top:28px;}
     .about-lede{font-size:1.12rem;}
-    .pillar{grid-template-columns:1fr;gap:6px;padding:18px 0;}
+    .pillar{height:80px;padding:16px 16px;gap:12px;border-radius:12px;}
+    .pillar.is-hovered{height:216px;}
+    .pillar-icon{width:36px;height:36px;border-radius:9px;}
+    .pillar-icon svg{width:17px;height:17px;}
     .service-card{padding:26px 20px 22px;border-radius:10px;}
     .service-card h3{font-size:1.08rem;margin-top:16px;}
     .why-node h4{font-size:0.98rem;}
@@ -1420,18 +1451,33 @@
           <p>Driven by excellence and professionalism, we're committed to supporting economic growth and infrastructure development through reliable, cost-effective solutions tailored to every client's needs — delivered with the highest standards of quality, safety and integrity.</p>
         </div>
       </div>
-      <div class="pillars reveal-stagger">
-        <div class="pillar">
-          <div class="k">Vision</div>
-          <div class="v">To become one of South Africa's <strong>leading integrated service providers</strong> in communications, mining support, construction and general supplies — through innovation, professionalism and service excellence.</div>
+      <div class="pillars reveal-stagger" id="pillarsList">
+        <div class="pillar" data-pillar>
+          <div class="pillar-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>
+          </div>
+          <div class="pillar-text">
+            <div class="k">Vision</div>
+            <div class="v">To become one of South Africa's <strong>leading integrated service providers</strong> in communications, mining support, construction and general supplies — through innovation, professionalism and service excellence.</div>
+          </div>
         </div>
-        <div class="pillar">
-          <div class="k">Mission</div>
-          <div class="v">Deliver high-quality, professional services that <strong>consistently exceed expectations</strong>, build sustainable partnerships on trust and accountability, and contribute to infrastructure development and community empowerment.</div>
+        <div class="pillar" data-pillar>
+          <div class="pillar-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg>
+          </div>
+          <div class="pillar-text">
+            <div class="k">Mission</div>
+            <div class="v">Deliver high-quality, professional services that <strong>consistently exceed expectations</strong>, build sustainable partnerships on trust and accountability, and contribute to infrastructure development and community empowerment.</div>
+          </div>
         </div>
-        <div class="pillar">
-          <div class="k">Registration</div>
-          <div class="v"><strong>2016/029251/07</strong> &middot; Level 1 B-BBEE Contributor &middot; Director: Malesa Mashiloane</div>
+        <div class="pillar" data-pillar>
+          <div class="pillar-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z"/><path d="M9 12l2 2 4-4"/></svg>
+          </div>
+          <div class="pillar-text">
+            <div class="k">Registration</div>
+            <div class="v"><strong>2016/029251/07</strong> &middot; Level 1 B-BBEE Contributor &middot; Director: Malesa Mashiloane</div>
+          </div>
         </div>
       </div>
     </div>
@@ -1881,6 +1927,47 @@ ${d.message || ''}`
     clientsMarquee.addEventListener('touchstart', () => { clientsTrack.style.animationPlayState = 'paused'; }, {passive:true});
     clientsMarquee.addEventListener('touchend', () => { setTimeout(() => { clientsTrack.style.animationPlayState = 'running'; }, 800); }, {passive:true});
   }
+
+  // Vision/Mission/Registration cards - 3D tilt + hover expand
+  (function(){
+    const list = document.getElementById('pillarsList');
+    if(!list) return;
+    const cards = Array.from(list.querySelectorAll('[data-pillar]'));
+    const isTouch = window.matchMedia('(hover: none)').matches;
+
+    function setActive(target){
+      cards.forEach(c => {
+        const active = c === target;
+        c.classList.toggle('is-hovered', active);
+        c.classList.toggle('is-dimmed', !!target && !active);
+        if(!active){
+          c.style.removeProperty('--rx');
+          c.style.removeProperty('--ry');
+        }
+      });
+    }
+
+    cards.forEach(card => {
+      if(!isTouch){
+        card.addEventListener('mouseenter', () => setActive(card));
+        card.addEventListener('mouseleave', () => setActive(null));
+        card.addEventListener('mousemove', (e) => {
+          const r = card.getBoundingClientRect();
+          const px = (e.clientX - r.left) / r.width;
+          const py = (e.clientY - r.top) / r.height;
+          const ry = (px - 0.5) * 10;
+          const rx = (0.5 - py) * 8;
+          card.style.setProperty('--rx', rx.toFixed(2) + 'deg');
+          card.style.setProperty('--ry', ry.toFixed(2) + 'deg');
+        });
+      } else {
+        card.addEventListener('click', () => {
+          const willOpen = !card.classList.contains('is-hovered');
+          setActive(willOpen ? card : null);
+        });
+      }
+    });
+  })();
 
   // Floating back to top button - appears when scrolling down - FIXED
   (function(){
